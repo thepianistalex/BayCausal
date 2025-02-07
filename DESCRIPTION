@@ -1,0 +1,17 @@
+Package: glvcausal
+Type: Package
+Title: What the Package Does (Short Line)
+Encoding: UTF-8
+Version: 1.0
+Date: 2025-02-06
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line).
+License: What license is it under?
+Imports: 
+    Rcpp
+LinkingTo: Rcpp, RcppArmadillo
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.3.2
