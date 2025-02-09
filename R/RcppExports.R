@@ -9,3 +9,23 @@ rmvn_rcpp <- function(n, mean, sigma) {
     .Call(`_glvcausal_rmvn_rcpp`, n, mean, sigma)
 }
 
+rinvgaussian_rcpp <- function(mu, lambda) {
+    .Call(`_glvcausal_rinvgaussian_rcpp`, mu, lambda)
+}
+
+compute_Y_tilde_q <- function(q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC) {
+    .Call(`_glvcausal_compute_Y_tilde_q`, q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC)
+}
+
+compute_loglik_B_rcpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
+    .Call(`_glvcausal_compute_loglik_B_rcpp`, q, B, A, L, C, mu, sigma2, Y, X)
+}
+
+compute_marginal_loglik_rcpp <- function(sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma) {
+    .Call(`_glvcausal_compute_marginal_loglik_rcpp`, sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma)
+}
+
+compute_loglik_rjmcmc_cpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
+    .Call(`_glvcausal_compute_loglik_rjmcmc_cpp`, q, B, A, L, C, mu, sigma2, Y, X)
+}
+

@@ -12,27 +12,124 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // rinvgamma_rcpp
-double rinvgamma_rcpp(const double a, const double b);
+double rinvgamma_rcpp(const double& a, const double& b);
 RcppExport SEXP _glvcausal_rinvgamma_rcpp(SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< const double >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const double& >::type a(aSEXP);
+    Rcpp::traits::input_parameter< const double& >::type b(bSEXP);
     rcpp_result_gen = Rcpp::wrap(rinvgamma_rcpp(a, b));
     return rcpp_result_gen;
 END_RCPP
 }
 // rmvn_rcpp
-arma::mat rmvn_rcpp(const int n, arma::vec& mean, arma::mat& sigma);
+arma::mat rmvn_rcpp(const int& n, arma::vec& mean, arma::mat& sigma);
 RcppExport SEXP _glvcausal_rmvn_rcpp(SEXP nSEXP, SEXP meanSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int& >::type n(nSEXP);
     Rcpp::traits::input_parameter< arma::vec& >::type mean(meanSEXP);
     Rcpp::traits::input_parameter< arma::mat& >::type sigma(sigmaSEXP);
     rcpp_result_gen = Rcpp::wrap(rmvn_rcpp(n, mean, sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rinvgaussian_rcpp
+double rinvgaussian_rcpp(const double& mu, const double& lambda);
+RcppExport SEXP _glvcausal_rinvgaussian_rcpp(SEXP muSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const double& >::type lambda(lambdaSEXP);
+    rcpp_result_gen = Rcpp::wrap(rinvgaussian_rcpp(mu, lambda));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_Y_tilde_q
+arma::vec compute_Y_tilde_q(const int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const int& Q, const int& S, const int& P, const arma::mat& Y, const arma::mat& X, const bool& minus_mu, const bool& minus_BY, const bool& minus_AX, const bool& minus_LC);
+RcppExport SEXP _glvcausal_compute_Y_tilde_q(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP QSEXP, SEXP SSEXP, SEXP PSEXP, SEXP YSEXP, SEXP XSEXP, SEXP minus_muSEXP, SEXP minus_BYSEXP, SEXP minus_AXSEXP, SEXP minus_LCSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const int& >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< const int& >::type S(SSEXP);
+    Rcpp::traits::input_parameter< const int& >::type P(PSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type minus_mu(minus_muSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type minus_BY(minus_BYSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type minus_AX(minus_AXSEXP);
+    Rcpp::traits::input_parameter< const bool& >::type minus_LC(minus_LCSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_loglik_B_rcpp
+double compute_loglik_B_rcpp(const int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _glvcausal_compute_loglik_B_rcpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type sigma2(sigma2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_loglik_B_rcpp(q, B, A, L, C, mu, sigma2, Y, X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_marginal_loglik_rcpp
+double compute_marginal_loglik_rcpp(const arma::mat& sparsity_matrix, const int& q, const arma::mat& C, const arma::mat& tau, const arma::mat& L_0, const arma::mat& Y, const arma::mat& B, const arma::mat& X, const arma::mat& A, const arma::vec& mu, const double& a_sigma, const double& b_sigma);
+RcppExport SEXP _glvcausal_compute_marginal_loglik_rcpp(SEXP sparsity_matrixSEXP, SEXP qSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP L_0SEXP, SEXP YSEXP, SEXP BSEXP, SEXP XSEXP, SEXP ASEXP, SEXP muSEXP, SEXP a_sigmaSEXP, SEXP b_sigmaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type sparsity_matrix(sparsity_matrixSEXP);
+    Rcpp::traits::input_parameter< const int& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type L_0(L_0SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const double& >::type a_sigma(a_sigmaSEXP);
+    Rcpp::traits::input_parameter< const double& >::type b_sigma(b_sigmaSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_marginal_loglik_rcpp(sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma));
+    return rcpp_result_gen;
+END_RCPP
+}
+// compute_loglik_rjmcmc_cpp
+double compute_loglik_rjmcmc_cpp(int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _glvcausal_compute_loglik_rjmcmc_cpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int& >::type q(qSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type sigma2(sigma2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_loglik_rjmcmc_cpp(q, B, A, L, C, mu, sigma2, Y, X));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -40,6 +137,11 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_glvcausal_rinvgamma_rcpp", (DL_FUNC) &_glvcausal_rinvgamma_rcpp, 2},
     {"_glvcausal_rmvn_rcpp", (DL_FUNC) &_glvcausal_rmvn_rcpp, 3},
+    {"_glvcausal_rinvgaussian_rcpp", (DL_FUNC) &_glvcausal_rinvgaussian_rcpp, 2},
+    {"_glvcausal_compute_Y_tilde_q", (DL_FUNC) &_glvcausal_compute_Y_tilde_q, 15},
+    {"_glvcausal_compute_loglik_B_rcpp", (DL_FUNC) &_glvcausal_compute_loglik_B_rcpp, 9},
+    {"_glvcausal_compute_marginal_loglik_rcpp", (DL_FUNC) &_glvcausal_compute_marginal_loglik_rcpp, 12},
+    {"_glvcausal_compute_loglik_rjmcmc_cpp", (DL_FUNC) &_glvcausal_compute_loglik_rjmcmc_cpp, 9},
     {NULL, NULL, 0}
 };
 
