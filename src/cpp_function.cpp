@@ -201,10 +201,10 @@ double compute_loglik_rjmcmc_cpp(int &q, const arma::mat &B, const arma::mat &A,
  */
 
 // [[Rcpp::export]]
-mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
-                  const arma::mat &B, const arma::mat &L, const arma::mat &C,
-                  const arma::vec &mu, const arma::mat &tau, const arma::vec &sigma2,
-                  const arma::mat &Y, const arma::mat &X){
+arma::mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
+                        const arma::mat &B, const arma::mat &L, const arma::mat &C,
+                        const arma::vec &mu, const arma::mat &tau, const arma::vec &sigma2,
+                        const arma::mat &Y, const arma::mat &X){
   
   double n = Y.n_rows;
   double Q = Y.n_cols;

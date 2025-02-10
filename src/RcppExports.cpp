@@ -133,6 +133,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// update_A_rcpp
+arma::mat update_A_rcpp(const arma::mat& gamma_alpha, const arma::mat& nu_alpha, const arma::mat& B, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _glvcausal_update_A_rcpp(SEXP gamma_alphaSEXP, SEXP nu_alphaSEXP, SEXP BSEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type gamma_alpha(gamma_alphaSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type nu_alpha(nu_alphaSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type B(BSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type L(LSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type tau(tauSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type sigma2(sigma2SEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(update_A_rcpp(gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_glvcausal_rinvgamma_rcpp", (DL_FUNC) &_glvcausal_rinvgamma_rcpp, 2},
@@ -142,6 +162,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_glvcausal_compute_loglik_B_rcpp", (DL_FUNC) &_glvcausal_compute_loglik_B_rcpp, 9},
     {"_glvcausal_compute_marginal_loglik_rcpp", (DL_FUNC) &_glvcausal_compute_marginal_loglik_rcpp, 12},
     {"_glvcausal_compute_loglik_rjmcmc_cpp", (DL_FUNC) &_glvcausal_compute_loglik_rjmcmc_cpp, 9},
+    {"_glvcausal_update_A_rcpp", (DL_FUNC) &_glvcausal_update_A_rcpp, 10},
     {NULL, NULL, 0}
 };
 
