@@ -78,7 +78,7 @@ set_init_default <- function(seed, P_star, data, prior_lst){
   for (i in 1:n){
     for (q in 1:Q){
       Y_tilde_iq <- Y[i,q] - t(Y[i,])%*%B_init[q,] - t(X[i,])%*%A_init[q,] - t(C_init[i,])%*%L_init[q,]
-      tau_init[i,q] <- rinvgaussian(1, mu=sqrt(sigma2_init[q])/(2*abs(Y_tilde_iq)), lambda=1/4)
+      tau_init[i,q] <- LaplacesDemon::rinvgaussian(1, mu=sqrt(sigma2_init[q])/(2*abs(Y_tilde_iq)), lambda=1/4)
     }
   }
   
@@ -116,7 +116,7 @@ set_mh_default <- function(){
 #'
 #' @returns a list containing chain setup
 #' @export
-set_prior_default <- function(){
+set_prior_default <- function(data){
   
   prior_lst <- list()
   
