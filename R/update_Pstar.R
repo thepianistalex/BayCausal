@@ -1,7 +1,7 @@
-update_P_star <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mcmc_setup_lst, prior_lst, data){
+update_P_star <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mh_setup_lst, prior_lst, data){
 
   # check if split/merge is applicable
-  psplit <- compute_psplit(pivot, sparsity_matrix, mcmc_setup_lst$ps, prior_lst$H)
+  psplit <- compute_psplit(pivot, sparsity_matrix, mh_setup_lst$ps, prior_lst$H)
 
   if(is.na(psplit)){
     # no move is possible, return the current values
@@ -13,9 +13,9 @@ update_P_star <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot
   }
 
   if(move == "split"){
-    res_lst <- update_P_star_split(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mcmc_setup_lst, prior_lst, data)
+    res_lst <- update_P_star_split(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mh_setup_lst, prior_lst, data)
   } else{
-    res_lst <- update_P_star_merge(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mcmc_setup_lst, prior_lst, data)
+    res_lst <- update_P_star_merge(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mh_setup_lst, prior_lst, data)
   }
 
   return(res_lst)
@@ -23,7 +23,7 @@ update_P_star <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot
 
 
 
-update_P_star_split <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mcmc_setup_lst, prior_lst, data){
+update_P_star_split <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mh_setup_lst, prior_lst, data){
 
   Y <- data$Y
   X <- data$X
@@ -32,7 +32,7 @@ update_P_star_split <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix,
   H <- prior_lst$H
   a_sigma <- prior_lst$a_sigma
   b_sigma <- prior_lst$b_sigma
-  ps <- mcmc_setup_lst$ps
+  ps <- mh_setup_lst$ps
 
   # Sample a pivot for the new spurious column
   available_pivots <- (1:Q)[!(1:Q) %in% pivot]
@@ -106,7 +106,7 @@ update_P_star_split <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix,
 
 
 ## To be updated
-update_P_star_merge <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mcmc_setup_lst, prior_lst, data){
+update_P_star_merge <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix, pivot, P_star, kappa, mh_setup_lst, prior_lst, data){
 
   Y <- data$Y
   X <- data$X
@@ -115,7 +115,7 @@ update_P_star_merge <- function(mu, A, B, L, C, sigma2, a1, a2, sparsity_matrix,
   H <- prior_lst$H
   a_sigma <- prior_lst$a_sigma
   b_sigma <- prior_lst$b_sigma
-  ps <- mcmc_setup_lst$ps
+  ps <- mh_setup_lst$ps
 
   # Sample a spurious column to merge
   sp_columns <- which(colSums(sparsity_matrix) == 1)

@@ -1,7 +1,7 @@
-update_pivot <- function(sparsity_matrix, pivot, a1, a2, P_star, C, B, A, mu, tau, L_0, prior_lst, mcmc_setup_lst, data){
+update_pivot <- function(sparsity_matrix, pivot, a1, a2, P_star, C, B, A, mu, tau, L_0, prior_lst, mh_setup_lst, data){
 
-  pshift <- mcmc_setup_lst$pshift
-  pswitch <- mcmc_setup_lst$pswitch
+  pshift <- mh_setup_lst$pshift
+  pswitch <- mh_setup_lst$pswitch
 
   pivot_update <- pivot
   sparsity_matrix_update <- sparsity_matrix
@@ -18,7 +18,7 @@ update_pivot <- function(sparsity_matrix, pivot, a1, a2, P_star, C, B, A, mu, ta
     } else if(move == "switch"){
       res_lst <- update_pivot_switch(p, d_p, sparsity_matrix_update, pivot_update, a1, a2, P_star, C, B, A, mu, tau, L_0, prior_lst, data)
     } else{
-      res_lst <- update_pivot_add_del(p, d_p, sparsity_matrix_update, pivot_update, a1, a2, C, B, A, mu, tau, L_0, prior_lst, mcmc_setup_lst, data)
+      res_lst <- update_pivot_add_del(p, d_p, sparsity_matrix_update, pivot_update, a1, a2, C, B, A, mu, tau, L_0, prior_lst, mh_setup_lst, data)
     }
 
     pivot_update <- res_lst$pivot_update
@@ -155,13 +155,13 @@ update_pivot_switch <- function(p, d_p, sparsity_matrix, pivot, a1, a2, P_star, 
 
 
 
-update_pivot_add_del <- function(p, d_p, sparsity_matrix, pivot, a1, a2, C, B, A, mu, tau, L_0, prior_lst, mcmc_setup_lst, data){
+update_pivot_add_del <- function(p, d_p, sparsity_matrix, pivot, a1, a2, C, B, A, mu, tau, L_0, prior_lst, mh_setup_lst, data){
 
   Y <- data$Y
   X <- data$X
   Q <- ncol(Y)
   H <- prior_lst$H
-  pa <- mcmc_setup_lst$pa
+  pa <- mh_setup_lst$pa
   a_sigma <- prior_lst$a_sigma
   b_sigma <- prior_lst$b_sigma
 
