@@ -1,4 +1,4 @@
-set_mcmc <- function(){
+set_mcmc_default <- function(){
 
   mcmc_setup_lst <- list()
 

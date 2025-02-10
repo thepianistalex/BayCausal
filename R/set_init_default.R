@@ -1,0 +1,76 @@
+set_init_default <- function(seed, P){
+  
+  set.seed(seed)
+  
+  A_init <- matrix(NA, Q, S)
+  gamma_alpha_init <- matrix(NA, Q, S)
+  nu_alpha_init <- matrix(NA, Q, S)
+  rho_alpha_init <- 0.5
+  
+  B_init <- matrix(NA, Q, Q)
+  gamma_beta_init <- matrix(NA, Q, Q)
+  nu_beta_init <- matrix(NA, Q, Q)
+  rho_beta_init <- 0.5
+  
+  tau_init <- matrix(NA, n, Q)
+  mu_init <- rep(0,Q)
+  sigma2_init <- rep(1,Q)
+  
+  L_init <- matrix(NA, Q, P)
+  C_init <- matrix(rnorm(n*P,0,1), n, P)
+  sparsity_matrix_init <- matrix(1, Q, P)
+  pivot_init <- 1:P
+  
+  a_init <- c(1,2)
+  
+  kappa_init <- 1
+  
+  # initialize alpha
+  for (q in 1:Q){
+    for (s in 1:S){
+      gamma_alpha_init[q,s] <- sample(c(nu_0,1), 1, prob=c(0.5,0.5))
+      nu_alpha_init[q,s] <- 1
+      A_init[q,s] <- rnorm(1, 0, sqrt(gamma_alpha_init[q,s]*nu_alpha_init[q,s]))
+    }
+  }
+  
+  # initialize beta
+  for (q in 1:Q){
+    for (p in 1:Q){
+      gamma_beta_init[q,p] <- sample(c(nu_0,1), 1, prob=c(0.5,0.5))
+      nu_beta_init[q,p] <- 1
+      B_init[q,p] <- rnorm(1, 0, sqrt(gamma_beta_init[q,p]*nu_beta_init[q,p]))
+    }
+  }
+  
+  # initialize sparsity matrix
+  if(P > 1){
+    for(p in 2:P){
+      for(q in 1:(p-1)){
+        sparsity_matrix_init[q,p] <- 0
+      }
+    }
+  }
+  
+  # initialize L
+  L_init <- sparsity_matrix_init
+  L_init_plain <- matrix(rnorm(Q*P,0,1), Q, P)
+  
+  # initialize zeta
+  zeta_init <- update_zeta(a_init[1], a_init[2], sparsity_matrix_init, pivot_init, P)
+  
+  # initialize tau
+  for (i in 1:n){
+    for (q in 1:Q){
+      Y_tilde_iq <- Y[i,q] - t(Y[i,])%*%B_init[q,] - t(X[i,])%*%A_init[q,] - t(C_init[i,])%*%L_init[q,]
+      tau_init[i,q] <- rinvgaussian(1, mu=sqrt(sigma2_init[q])/(2*abs(Y_tilde_iq)), lambda=1/4)
+    }
+  }
+  
+  init_list <- list(A=A_init, gamma_alpha=gamma_alpha_init, nu_alpha=nu_alpha_init, rho_alpha=rho_alpha_init,
+                    B=B_init, gamma_beta=gamma_beta_init, nu_beta=nu_beta_init, rho_beta=rho_beta_init,
+                    C=C_init, L=L_init, L_plain=L_init_plain, a=a_init, tau=tau_init, mu=mu_init, sigma2=sigma2_init, 
+                    sparsity_matrix=sparsity_matrix_init, pivot=pivot_init, zeta=zeta_init, kappa=kappa_init)
+  
+  return(init_list)    
+}

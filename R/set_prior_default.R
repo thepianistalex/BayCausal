@@ -1,4 +1,4 @@
-set_prior <- function(data){
+set_prior_default <- function(data){
 
   prior_lst <- list()
 

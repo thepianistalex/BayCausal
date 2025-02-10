@@ -1,4 +1,6 @@
-glvcausal <- function(data, mcmc_setup_lst, init_lst, prior_lst, seed){
+glvcausal <- function(data, 
+                      mcmc_setup_lst, init_lst, prior_lst, 
+                      Nit, burn, thin, seed){
 
   set.seed(seed)
 
@@ -19,7 +21,7 @@ glvcausal <- function(data, mcmc_setup_lst, init_lst, prior_lst, seed){
     param_all_lst$nu_beta <- update_nu_beta(param_all_lst$B, param_all_lst$gamma_beta, prior_lst)
     param_all_lst$rho_beta <- update_rho_beta(param_all_lst$gamma_beta, prior_lst)
 
-    param_all_lst$tau <- update_tau_faster_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
+    param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
     param_all_lst$sigma2 <- c(update_sigma2_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$tau, data$Y, data$X, a_sigma, b_sigma))
 
     param_all_lst$C <- update_C_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$L, param_all_lst$tau, param_all_lst$sigma2, param_all_lst$P_star, data$Y, data$X)
