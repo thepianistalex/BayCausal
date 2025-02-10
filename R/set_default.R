@@ -54,7 +54,7 @@ set_init_default <- function(seed, P){
   
   # initialize L
   L_init <- sparsity_matrix_init
-
+  
   # initialize zeta
   zeta_init <- update_zeta(a_init[1], a_init[2], sparsity_matrix_init, pivot_init, P)
   
@@ -72,4 +72,46 @@ set_init_default <- function(seed, P){
                     sparsity_matrix=sparsity_matrix_init, pivot=pivot_init, zeta=zeta_init, kappa=kappa_init)
   
   return(init_list)    
+}
+
+
+
+set_mh_default <- function(){
+  
+  mh_setup_lst <- list()
+  
+  mh_setup_lst$B_step <- 0.02
+  mh_setup_lst$a1_step <- 0.1
+  mh_setup_lst$a2_step <- 0.1
+  mh_setup_lst$pshift <- 1/3
+  mh_setup_lst$pswitch <- 1/3
+  mh_setup_lst$pa <- 0.5
+  mh_setup_lst$ps <- 0.5
+  
+  return(mh_setup_lst)
+}
+
+
+
+set_prior_default <- function(data){
+  
+  prior_lst <- list()
+  
+  prior_lst$a_nu <- 1
+  prior_lst$b_nu <- 1
+  prior_lst$a_rho <- 1
+  prior_lst$b_rho <- 1
+  prior_lst$a_sigma <- 1
+  prior_lst$b_sigma <- 1
+  prior_lst$nu_0 <- 2.5e-4
+  prior_lst$a_a1 <- 6
+  Eq <- 1
+  prior_lst$H <- ncol(data$Y) - 1
+  prior_lst$b_a1 <- a_a1*(H-Eq)/(H*Eq)
+  prior_lst$a_a2 <- a_a1
+  prior_lst$b_a2 <- a_a1
+  prior_lst$a_kappa <- 1
+  prior_lst$b_kappa <- 1
+  
+  return(prior_lst)
 }
