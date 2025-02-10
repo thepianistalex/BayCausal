@@ -246,3 +246,95 @@ arma::mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
   
   return(A_update);
 }
+
+
+
+// [[Rcpp::export]]
+arma::mat update_C_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B, 
+                        const arma::mat &L, const arma::mat &tau, 
+                        const arma::vec &sigma2, int &P_star,
+                        const arma::mat &Y, const arma::mat &X) {
+  
+  int n = Y.n_rows;
+  vec Y_tilde_i, mu_n;
+  mat Sigma_i_inv, V_n;
+  mat C_update(n, P_star, fill::none);
+  
+  for (int i = 0; i < n; i++) {
+    
+    Sigma_i_inv = diagmat(tau.row(i).t() / sigma2);
+    
+    Y_tilde_i = Y.row(i).t() - mu - B * Y.row(i).t() - A * X.row(i).t();
+    
+    V_n = inv_sympd(diagmat(ones(P_star)) + L.t() * Sigma_i_inv * L);
+    mu_n = V_n * L.t() * Sigma_i_inv * Y_tilde_i;
+    
+    C_update.row(i) = conv_to<rowvec>::from(rmvn_rcpp(1, mu_n, V_n));
+  }
+  
+  return C_update;
+}
+
+
+
+// [[Rcpp::export]]
+arma::mat update_tau_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, 
+                                const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2,
+                                const arma::mat& Y, const arma::mat& X){
+
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+  double eps = 1e-3;
+  double lambda_iq = 1.0/4;
+  double tau_update_iq;
+  mat tau_update(n, Q); tau_update.fill(datum::nan);
+
+  for (int q=0; q<Q; q++){
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, true, true, true, true);
+    vec mu_q = sqrt(sigma2(q)) / (2.0 * arma::abs(Y_tilde_q));
+    
+    for (int i=0; i<n; i++){
+      tau_update_iq = rinvgaussian_rcpp(mu_q(i), lambda_iq);
+      tau_update(i,q) = max(tau_update_iq, eps);
+    }
+    
+  }
+
+  return(tau_update);
+}
+
+
+
+// [[Rcpp::export]]
+arma::vec update_sigma2_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, 
+                             const arma::mat& tau,
+                             const arma::mat& Y, const arma::mat& X,
+                             const double &a_sigma, const double &b_sigma){
+  
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+  double tau_Ytilde_sum, Y_tilde_iq;
+  double a_sigma_star, b_sigma_star;
+  vec sigma2_update(Q);
+  
+  for (int q=0; q<Q; q++){
+    
+    tau_Ytilde_sum = 0;
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, true, true, false, true);
+    
+    for (int i=0; i<n; i++){
+      Y_tilde_iq = Y_tilde_q(i);
+      tau_Ytilde_sum += pow(Y_tilde_iq,2)*tau(i,q);
+    }
+    // Inverse-Gamma posterior distribution
+    a_sigma_star = a_sigma + n/2;
+    b_sigma_star = b_sigma + tau_Ytilde_sum/2;
+    sigma2_update(q) = rinvgamma_rcpp(a_sigma_star, b_sigma_star);
+  }
+  
+  return(sigma2_update);
+}
