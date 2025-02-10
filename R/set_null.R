@@ -1,9 +1,9 @@
 set_init_null <- function(){
   
-  init_list <- list(A=NULL, gamma_alpha=NULL, nu_alpha=NULL, rho_alpha=NULL,
-                    B=NULL, gamma_beta=NULL, nu_beta=NULL, rho_beta=NULL,
-                    C=NULL, L=NULL, a=NULL, tau=NULL, mu=NULL, sigma2=NULL, 
-                    sparsity_matrix=NULL, pivot=NULL, zeta=NULL, kappa=NULL)
+  init_list <- list(A=NA, gamma_alpha=NA, nu_alpha=NA, rho_alpha=NA,
+                    B=NA, gamma_beta=NA, nu_beta=NA, rho_beta=NA,
+                    C=NA, L=NA, a=NA, tau=NA, mu=NA, sigma2=NA, 
+                    sparsity_matrix=NA, pivot=NA, zeta=NA, kappa=NA)
   
   return(init_list)    
 }
@@ -14,20 +14,20 @@ set_prior_null <- function(data){
   
   prior_lst <- list()
   
-  prior_lst$a_nu <- NULL
-  prior_lst$b_nu <- NULL
-  prior_lst$a_rho <- NULL
-  prior_lst$b_rho <- NULL
-  prior_lst$a_sigma <- NULL
-  prior_lst$b_sigma <- NULL
-  prior_lst$nu_0 <- NULL
-  prior_lst$a_a1 <- NULL
-  prior_lst$H <- NULL
-  prior_lst$b_a1 <- NULL
-  prior_lst$a_a2 <- NULL
-  prior_lst$b_a2 <- NULL
-  prior_lst$a_kappa <- NULL
-  prior_lst$b_kappa <- NULL
+  prior_lst$a_nu <- NA
+  prior_lst$b_nu <- NA
+  prior_lst$a_rho <- NA
+  prior_lst$b_rho <- NA
+  prior_lst$a_sigma <- NA
+  prior_lst$b_sigma <- NA
+  prior_lst$nu_0 <- NA
+  prior_lst$a_a1 <- NA
+  prior_lst$H <- NA
+  prior_lst$b_a1 <- NA
+  prior_lst$a_a2 <- NA
+  prior_lst$b_a2 <- NA
+  prior_lst$a_kappa <- NA
+  prior_lst$b_kappa <- NA
   
   return(prior_lst)
 }
@@ -38,13 +38,13 @@ set_mh_null <- function(){
   
   mh_setup_lst <- list()
   
-  mh_setup_lst$B_step <- NULL
-  mh_setup_lst$a1_step <- NULL
-  mh_setup_lst$a2_step <- NULL
-  mh_setup_lst$pshift <- NULL
-  mh_setup_lst$pswitch <- NULL
-  mh_setup_lst$pa <- NULL
-  mh_setup_lst$ps <- NULL
+  mh_setup_lst$B_step <- NA
+  mh_setup_lst$a1_step <- NA
+  mh_setup_lst$a2_step <- NA
+  mh_setup_lst$pshift <- NA
+  mh_setup_lst$pswitch <- NA
+  mh_setup_lst$pa <- NA
+  mh_setup_lst$ps <- NA
   
   return(mh_setup_lst)
 }
@@ -59,10 +59,10 @@ set_chain_null <- function(){
   
   chain_setup_lst <- list()
   
-  chain_setup_lst$Nit <- NULL
-  chain_setup_lst$burn <- NULL
-  chain_setup_lst$thin <- NULL
-  chain_setup_lst$seed <- NULL
+  chain_setup_lst$Nit <- NA
+  chain_setup_lst$burn <- NA
+  chain_setup_lst$thin <- NA
+  chain_setup_lst$seed <- NA
   
   return(chain_setup_lst)
 }
