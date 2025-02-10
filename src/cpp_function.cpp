@@ -201,6 +201,46 @@ double compute_loglik_rjmcmc_cpp(int &q, const arma::mat &B, const arma::mat &A,
  */
 
 // [[Rcpp::export]]
+arma::mat update_mu_rcpp(const arma::mat &B, const arma::mat &A, const arma::mat &L, 
+                         const arma::mat &C,
+                         const arma::mat &tau, const arma::vec &sigma2,
+                         const arma::mat &Y, const arma::mat &X){
+  
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+  double Y_tilde_iq, tau_Ytilde_sum, sigma2_tilde_sum, mu_n, V_n;
+  
+  vec mu_update(Q);
+  
+  for (int q=0; q<Q; q++){
+    
+    tau_Ytilde_sum = 0; 
+    sigma2_tilde_sum = 0;
+    vec mu_placeholder;
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu_placeholder, Q, S, P, Y, X, false, true, true, true);
+    
+    for (int i=0; i<n; i++){
+      
+      Y_tilde_iq = Y_tilde_q(i);
+      
+      tau_Ytilde_sum += Y_tilde_iq*tau(i,q);
+      sigma2_tilde_sum += tau(i,q)/sigma2(q);
+    }
+    
+    // Gaussian full conditional distribution for mu
+    V_n = 1/(sigma2_tilde_sum + 1/100);
+    mu_n = V_n*tau_Ytilde_sum/sigma2(q);
+    mu_update(q) = R::rnorm(mu_n, sqrt(V_n));
+  }
+  
+  return(mu_update);
+}
+
+
+
+// [[Rcpp::export]]
 arma::mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
                         const arma::mat &B, const arma::mat &L, const arma::mat &C,
                         const arma::vec &mu, const arma::mat &tau, const arma::vec &sigma2,
@@ -278,9 +318,9 @@ arma::mat update_C_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat
 
 
 // [[Rcpp::export]]
-arma::mat update_tau_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, 
-                                const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2,
-                                const arma::mat& Y, const arma::mat& X){
+arma::mat update_tau_rcpp(const arma::mat &B, const arma::mat &A, const arma::mat &L, 
+                                const arma::mat &C, const arma::vec &mu, const arma::vec &sigma2,
+                                const arma::mat &Y, const arma::mat &X){
 
   double n = Y.n_rows;
   double Q = Y.n_cols;
@@ -308,9 +348,9 @@ arma::mat update_tau_rcpp(const arma::mat& B, const arma::mat& A, const arma::ma
 
 
 // [[Rcpp::export]]
-arma::vec update_sigma2_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, 
-                             const arma::mat& tau,
-                             const arma::mat& Y, const arma::mat& X,
+arma::vec update_sigma2_rcpp(const arma::mat &B, const arma::mat &A, const arma::mat &L, const arma::mat &C, const arma::vec &mu, 
+                             const arma::mat &tau,
+                             const arma::mat &Y, const arma::mat &X,
                              const double &a_sigma, const double &b_sigma){
   
   double n = Y.n_rows;
@@ -324,7 +364,7 @@ arma::vec update_sigma2_rcpp(const arma::mat& B, const arma::mat& A, const arma:
   for (int q=0; q<Q; q++){
     
     tau_Ytilde_sum = 0;
-    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, true, true, false, true);
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, true, true, true, true);
     
     for (int i=0; i<n; i++){
       Y_tilde_iq = Y_tilde_q(i);

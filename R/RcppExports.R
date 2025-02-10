@@ -29,6 +29,10 @@ compute_loglik_rjmcmc_cpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
     .Call(`_glvcausal_compute_loglik_rjmcmc_cpp`, q, B, A, L, C, mu, sigma2, Y, X)
 }
 
+update_mu_rcpp <- function(B, A, L, C, tau, sigma2, Y, X) {
+    .Call(`_glvcausal_update_mu_rcpp`, B, A, L, C, tau, sigma2, Y, X)
+}
+
 update_A_rcpp <- function(gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X) {
     .Call(`_glvcausal_update_A_rcpp`, gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X)
 }
