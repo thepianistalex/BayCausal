@@ -62,7 +62,7 @@ glvcausal <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, 
     
     if(verbose){
       if(it %% 1000 == 0){
-        cat("Iteration: ", it, "/", Nit, " completed at ", Sys.time(), "\n")
+        cat("Iteration: ", it, "/", Nit, " completed \n")
       }
     }
 
