@@ -4,12 +4,16 @@
 \alias{set_init_default}
 \title{Title}
 \usage{
-set_init_default(seed, P)
+set_init_default(seed, P_star, data, prior_lst)
 }
 \arguments{
-\item{seed}{}
+\item{seed}{random seed}
 
-\item{P}{}
+\item{P_star}{number of latent factors}
+
+\item{data}{data list}
+
+\item{prior_lst}{a list containing prior hyperparameters}
 }
 \value{
 a list containing initial values

@@ -1,13 +1,22 @@
 #' Title
 #'
-#' @param seed 
-#' @param P 
+#' @param seed random seed
+#' @param P_star  number of latent factors
+#' @param data data list
+#' @param prior_lst a list containing prior hyperparameters
 #'
 #' @returns a list containing initial values
 #' @export
-set_init_default <- function(seed, P){
+set_init_default <- function(seed, P_star, data, prior_lst){
   
   set.seed(seed)
+  
+  Y <- data$Y
+  X <- data$X
+  n <- nrow(Y)
+  Q <- ncol(Y)
+  S <- ncol(X)
+  nu_0 <- prior_lst$nu_0
   
   A_init <- matrix(NA, Q, S)
   gamma_alpha_init <- matrix(NA, Q, S)
@@ -23,10 +32,10 @@ set_init_default <- function(seed, P){
   mu_init <- rep(0,Q)
   sigma2_init <- rep(1,Q)
   
-  L_init <- matrix(NA, Q, P)
-  C_init <- matrix(rnorm(n*P,0,1), n, P)
-  sparsity_matrix_init <- matrix(1, Q, P)
-  pivot_init <- 1:P
+  L_init <- matrix(NA, Q, P_star)
+  C_init <- matrix(rnorm(n*P_star,0,1), n, P_star)
+  sparsity_matrix_init <- matrix(1, Q, P_star)
+  pivot_init <- 1:P_star
   
   a_init <- c(1,2)
   
@@ -51,8 +60,8 @@ set_init_default <- function(seed, P){
   }
   
   # initialize sparsity matrix
-  if(P > 1){
-    for(p in 2:P){
+  if(P_star > 1){
+    for(p in 2:P_star){
       for(q in 1:(p-1)){
         sparsity_matrix_init[q,p] <- 0
       }
@@ -63,7 +72,7 @@ set_init_default <- function(seed, P){
   L_init <- sparsity_matrix_init
   
   # initialize zeta
-  zeta_init <- update_zeta(a_init[1], a_init[2], sparsity_matrix_init, pivot_init, P)
+  zeta_init <- update_zeta(a_init[1], a_init[2], sparsity_matrix_init, pivot_init, P_star, prior_lst)
   
   # initialize tau
   for (i in 1:n){
@@ -75,7 +84,7 @@ set_init_default <- function(seed, P){
   
   init_list <- list(A=A_init, gamma_alpha=gamma_alpha_init, nu_alpha=nu_alpha_init, rho_alpha=rho_alpha_init,
                     B=B_init, gamma_beta=gamma_beta_init, nu_beta=nu_beta_init, rho_beta=rho_beta_init,
-                    C=C_init, L=L_init, a=a_init, tau=tau_init, mu=mu_init, sigma2=sigma2_init, 
+                    C=C_init, L=L_init, a=a_init, tau=tau_init, mu=mu_init, sigma2=sigma2_init, P_star=P_star,
                     sparsity_matrix=sparsity_matrix_init, pivot=pivot_init, zeta=zeta_init, kappa=kappa_init)
   
   return(init_list)    
@@ -121,9 +130,9 @@ set_prior_default <- function(){
   prior_lst$a_a1 <- 6
   Eq <- 1
   prior_lst$H <- ncol(data$Y) - 1
-  prior_lst$b_a1 <- a_a1*(H-Eq)/(H*Eq)
-  prior_lst$a_a2 <- a_a1
-  prior_lst$b_a2 <- a_a1
+  prior_lst$b_a1 <- prior_lst$a_a1*(prior_lst$H-Eq)/(prior_lst$H*Eq)
+  prior_lst$a_a2 <- prior_lst$a_a1
+  prior_lst$b_a2 <- prior_lst$a_a1
   prior_lst$a_kappa <- 1
   prior_lst$b_kappa <- 1
   
