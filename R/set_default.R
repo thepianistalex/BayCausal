@@ -1,3 +1,10 @@
+#' Title
+#'
+#' @param seed 
+#' @param P 
+#'
+#' @returns a list containing initial values
+#' @export
 set_init_default <- function(seed, P){
   
   set.seed(seed)
@@ -76,6 +83,10 @@ set_init_default <- function(seed, P){
 
 
 
+#' Title
+#'
+#' @returns a list containing chain setup
+#' @export
 set_mh_default <- function(){
   
   mh_setup_lst <- list()
@@ -92,8 +103,11 @@ set_mh_default <- function(){
 }
 
 
-
-set_prior_default <- function(data){
+#' Title
+#'
+#' @returns a list containing chain setup
+#' @export
+set_prior_default <- function(){
   
   prior_lst <- list()
   

@@ -51,7 +51,11 @@ set_mh_null <- function(){
 
 
 
-set_chain_null <- function(data){
+#' Title
+#'
+#' @returns a list containing chain setup
+#' @export
+set_chain_null <- function(){
   
   chain_setup_lst <- list()
   

@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param data 
+#' @param mh_setup_lst 
+#' @param init_lst 
+#' @param prior_lst 
+#' @param chain_setup_lst 
+#' @param verbose 
+#'
+#' @returns a list containing mcmc samples
+#' @export
 glvcausal <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
 
   set.seed(chain_setup_lst$seed)
