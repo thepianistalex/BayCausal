@@ -55,16 +55,6 @@ glvcausal <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, 
       }
     }
 
-    # if(it %% 1000 == 0){
-    #   dir_path <- here("R", "Real data", realdata_name, "mcmc_progress")
-    #   progress_path <- file.path(dir_path, paste0("mcmc_",seed,"_progress.txt"))
-    #   if (!dir.exists(dir_path)) {
-    #     dir.create(dir_path, recursive = TRUE)  # Create directory if it doesn't exist
-    #   }
-    #   progress_message <- paste0("Iteration: ", it, "/", Nit, " completed at ", Sys.time(), "\n")
-    #   cat(progress_message, file = progress_path, append = TRUE)
-    # }
-
   }
   
   return(mcmc_lst)
