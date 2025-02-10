@@ -1,0 +1,66 @@
+glvcausal <- function(data, mcmc_setup_lst, init_lst, prior_lst, seed){
+
+  set.seed(seed)
+
+  param_all_lst <- init_lst
+  mcmc_lst[[1]] <- save_param_res(param_all_lst)
+
+  for(it in 2:Nit){
+
+    param_all_lst$mu <- update_mu_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
+
+    param_all_lst$A <- update_A_rcpp(param_all_lst$gamma_alpha, param_all_lst$nu_alpha, param_all_lst$B, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
+    param_all_lst$gamma_alpha <- update_gamma_alpha(param_all_lst$A, param_all_lst$nu_alpha, param_all_lst$rho_alpha, prior_lst)
+    param_all_lst$nu_alpha <- update_nu_alpha(param_all_lst$A, param_all_lst$gamma_alpha, prior_lst)
+    param_all_lst$rho_alpha <- update_rho_alpha(param_all_lst$gamma_alpha, prior_lst)
+
+    param_all_lst$B <- update_B(param_all_lst$B, param_all_lst$gamma_beta, param_all_lst$nu_beta, param_all_lst$A, param_all_lst$mu, param_all_lst$L, param_all_lst$C, param_all_lst$sigma2, mcmc_setup_lst$B_step, data)
+    param_all_lst$gamma_beta <- update_gamma_beta(param_all_lst$B, param_all_lst$nu_beta, param_all_lst$rho_beta, prior_lst)
+    param_all_lst$nu_beta <- update_nu_beta(param_all_lst$B, param_all_lst$gamma_beta, prior_lst)
+    param_all_lst$rho_beta <- update_rho_beta(param_all_lst$gamma_beta, prior_lst)
+
+    param_all_lst$tau <- update_tau_faster_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
+    param_all_lst$sigma2 <- c(update_sigma2_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$tau, data$Y, data$X, a_sigma, b_sigma))
+
+    param_all_lst$C <- update_C_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$L, param_all_lst$tau, param_all_lst$sigma2, param_all_lst$P_star, data$Y, data$X)
+
+    param_all_lst$a[1] <- update_a1(param_all_lst$a[1], param_all_lst$a[2], param_all_lst$sparsity_matrix, param_all_lst$pivot, mcmc_setup_lst$a1_step, prior_lst)
+    param_all_lst$a[2] <- update_a2(param_all_lst$a[1], param_all_lst$a[2], param_all_lst$sparsity_matrix, param_all_lst$pivot, mcmc_setup_lst$a2_step, prior_lst)
+    param_all_lst$zeta <- update_zeta(param_all_lst$a[1], param_all_lst$a[2], param_all_lst$sparsity_matrix, param_all_lst$pivot, param_all_lst$P_star)
+    param_all_lst$kappa <- update_kappa(param_all_lst$sparsity_matrix, param_all_lst$L, param_all_lst$sigma2)
+    param_all_lst$L0 <- compute_L0(param_all_lst$kappa, param_all_lst$P_star)
+    param_all_lst$L <- update_L_uglt_shrink(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$C, param_all_lst$tau, param_all_lst$sigma2, param_all_lst$L0, param_all_lst$sparsity_matrix, param_all_lst$P_star, data)
+    param_all_lst$sparsity_matrix <- update_sparsity_indicator(param_all_lst$sparsity_matrix, param_all_lst$pivot, param_all_lst$zeta, param_all_lst$C, param_all_lst$B, param_all_lst$A, param_all_lst$mu, param_all_lst$tau, param_all_lst$L0, param_all_lst$P_star)
+    mcmc_tmp <- update_pivot(param_all_lst$sparsity_matrix, param_all_lst$pivot, param_all_lst$a[1], param_all_lst$a[2], param_all_lst$P_star, param_all_lst$C, param_all_lst$B, param_all_lst$A, param_all_lst$mu, param_all_lst$tau, param_all_lst$L0)
+    param_all_lst$pivot <- mcmc_tmp$pivot
+    param_all_lst$sparsity_matrix <- mcmc_tmp$sparsity_matrix
+
+    mcmc_tmp <- update_P_star(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$L, param_all_lst$C, param_all_lst$sigma2, param_all_lst$a[1], param_all_lst$a[2], param_all_lst$sparsity_matrix, param_all_lst$pivot, param_all_lst$P_star, param_all_lst$kappa)
+    param_all_lst$P_star <- mcmc_tmp$mcmc_P_star
+    param_all_lst$L <- mcmc_tmp$mcmc_L
+    param_all_lst$C <- mcmc_tmp$mcmc_C
+    param_all_lst$sigma2 <- mcmc_tmp$mcmc_sigma2
+    param_all_lst$sparsity_matrix <- mcmc_tmp$mcmc_sparsity_matrix
+    param_all_lst$pivot <- mcmc_tmp$mcmc_pivot
+
+    mcmc_lst[[it]] <- save_param_res(param_all_lst)
+
+    if(verbose){
+      if(it %% 1000 == 0){
+        cat("Iteration: ", it, "/", Nit, " completed at ", Sys.time(), "\n")
+      }
+    }
+
+    # if(it %% 1000 == 0){
+    #   dir_path <- here("R", "Real data", realdata_name, "mcmc_progress")
+    #   progress_path <- file.path(dir_path, paste0("mcmc_",seed,"_progress.txt"))
+    #   if (!dir.exists(dir_path)) {
+    #     dir.create(dir_path, recursive = TRUE)  # Create directory if it doesn't exist
+    #   }
+    #   progress_message <- paste0("Iteration: ", it, "/", Nit, " completed at ", Sys.time(), "\n")
+    #   cat(progress_message, file = progress_path, append = TRUE)
+    # }
+
+  }
+
+}
