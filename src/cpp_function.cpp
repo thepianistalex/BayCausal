@@ -13,7 +13,7 @@ using namespace Rcpp;
  */
 
 // [[Rcpp::export]]
-double rinvgamma_rcpp(const double& a, const double& b){
+double rinvgamma_rcpp(const double &a, const double &b){
   
   return(1/R::rgamma(a, 1/b));
   
@@ -22,7 +22,7 @@ double rinvgamma_rcpp(const double& a, const double& b){
 
 
 // [[Rcpp::export]]
-arma::mat rmvn_rcpp(const int& n, arma::vec &mean, arma::mat &sigma){
+arma::mat rmvn_rcpp(const int &n, arma::vec &mean, arma::mat &sigma){
   
   int k = sigma.n_cols; 
   mat z = randn(n, k);
@@ -192,4 +192,57 @@ double compute_loglik_rjmcmc_cpp(int &q, const arma::mat &B, const arma::mat &A,
       - arma::sum(arma::abs(Y_tilde_q)) / scale;
     
     return loglik;
+}
+
+
+
+/* 
+ update functions
+ */
+
+// [[Rcpp::export]]
+mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
+                  const arma::mat &B, const arma::mat &L, const arma::mat &C,
+                  const arma::vec &mu, const arma::mat &tau, const arma::vec &sigma2,
+                  const arma::mat &Y, const arma::mat &X){
+  
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+  double Y_tilde_iq;
+  
+  rowvec X_i;
+  vec tau_X_Ytilde_sum (S); 
+  vec mu_n(S); 
+  mat V_n(S,S);
+  mat tau_X2_sum(S,S);
+  mat V_alpha(S,S);
+  mat A_update(Q, S);
+  mat A_placeholder;
+  
+  for (int q=0; q<Q; q++){
+    
+    tau_X2_sum.fill(0); 
+    tau_X_Ytilde_sum.fill(0);
+    // need to plug in sth for the place of A for the function to work
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A_placeholder, L, C, mu, Q, S, P, Y, X, true, true, false, true);
+    
+    for (int i=0; i<n; i++){
+      
+      X_i = X.submat(i, 0, i, S-1);
+      tau_X2_sum += X_i.t()*X_i*tau(i,q);
+      
+      Y_tilde_iq = Y_tilde_q(i);
+      tau_X_Ytilde_sum += conv_to<vec>::from(X_i*Y_tilde_iq*tau(i,q));
+    }
+    
+    // Gaussian full conditional distribution for A
+    V_alpha = diagmat(1 / (gamma_alpha.row(q).t() % nu_alpha.row(q).t()));
+    V_n = inv_sympd(tau_X2_sum/sigma2(q) + V_alpha);
+    mu_n = V_n*(tau_X_Ytilde_sum /sigma2(q));
+    A_update.row(q) = conv_to<rowvec>::from(rmvn_rcpp(1, mu_n, V_n));
+  }
+  
+  return(A_update);
 }
