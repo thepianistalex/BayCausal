@@ -1,12 +1,12 @@
-test_that("check B", {
+test_that("check A", {
   
-  # skip("Skipping test 'check B' for now")
+  # skip("Skipping test 'check A' for now")
   
-  Nit <- 5000
-  burn <- 4000
-  thin <- 5
+  Nit <- 3000
+  burn <- 2000
+  thin <- 10
   seed <- 0
-  n <- 6000
+  n <- 5000
   
   data <- generate_sim_data(seed, n)
   
@@ -15,11 +15,11 @@ test_that("check B", {
   
   init_lst <- set_init_default(seed, data$P, data, prior_lst)
   init_lst$mu <- data$mu
-  # init_lst$B <- data$B
+  init_lst$B <- data$B
   init_lst$A <- data$A
   init_lst$L <- data$L
   init_lst$C <- data$C
-  init_lst$sigma2 <- data$sigma_e^2
+  # init_lst$sigma2 <- data$sigma_e^2
   
   chain_setup_lst <- set_chain_null()
   chain_setup_lst$Nit <- Nit
@@ -28,10 +28,10 @@ test_that("check B", {
   chain_setup_lst$seed <- seed
   
   
-  res <- glvcausal_check_B(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, TRUE)
-  post_mean <- extract_post_mean(res, "B", data$P)
+  res <- glvcausal_check_sigma2_tau(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
+  post_mean <- extract_post_mean(res, "A", data$P)
   
-  expect_true(are_all_close(post_mean, data$B, abs_tol = 0.1))
+  expect_true(are_all_close(post_mean, data$sigma2, abs_tol = 0.05))
   
   }
   )
