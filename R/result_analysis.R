@@ -1,3 +1,11 @@
+#' Title
+#'
+#' @param res 
+#' @param param 
+#' @param P_star 
+#'
+#' @returns posterior mean of the parameter
+#' @export
 extract_post_mean <- function(res, param, P_star) {
   filtered_samples <- Filter(function(x) x[["P_star"]] == P_star, res)
   
@@ -10,3 +18,19 @@ extract_post_mean <- function(res, param, P_star) {
   
   return(post_mean_param)
 }
+
+
+
+#' Title
+#'
+#' @param res 
+#'
+#' @returns posterior samples of P_star
+#' @export
+extract_P_star <- function(res) {
+  
+  P_star_samples <- unlist(lapply(res, function(x) x[["P_star"]]))
+  
+  return(P_star_samples)
+}
+
