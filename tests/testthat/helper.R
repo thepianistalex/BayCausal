@@ -102,6 +102,36 @@ glvcausal_check_A <- function(data, mh_setup_lst, init_lst, prior_lst, chain_set
     param_all_lst$gamma_alpha <- update_gamma_alpha(param_all_lst$A, param_all_lst$nu_alpha, param_all_lst$rho_alpha, prior_lst)
     param_all_lst$nu_alpha <- update_nu_alpha(param_all_lst$A, param_all_lst$gamma_alpha, prior_lst)
     param_all_lst$rho_alpha <- update_rho_alpha(param_all_lst$gamma_alpha, prior_lst)
+    param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
+    
+    if(save_check(it, chain_setup_lst$burn, chain_setup_lst$thin)){
+      mcmc_lst_count <- mcmc_lst_count + 1
+      mcmc_lst[[mcmc_lst_count]] <- save_param_res(param_all_lst)
+    }
+    
+  }
+  
+  return(mcmc_lst)
+  
+}
+
+
+
+glvcausal_check_B <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+  
+  set.seed(chain_setup_lst$seed)
+  
+  param_all_lst <- init_lst
+  mcmc_lst <- list()
+  mcmc_lst_count <- 0
+  
+  for(it in 2:chain_setup_lst$Nit){
+    
+    param_all_lst$B <- update_B(param_all_lst$B, param_all_lst$gamma_beta, param_all_lst$nu_beta, param_all_lst$A, param_all_lst$mu, param_all_lst$L, param_all_lst$C, param_all_lst$sigma2, mh_setup_lst$B_step, data)
+    param_all_lst$gamma_beta <- update_gamma_beta(param_all_lst$B, param_all_lst$nu_beta, param_all_lst$rho_beta, prior_lst)
+    param_all_lst$nu_beta <- update_nu_beta(param_all_lst$B, param_all_lst$gamma_beta, prior_lst)
+    param_all_lst$rho_beta <- update_rho_beta(param_all_lst$gamma_beta, prior_lst)
+    param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
     
     if(save_check(it, chain_setup_lst$burn, chain_setup_lst$thin)){
       mcmc_lst_count <- mcmc_lst_count + 1

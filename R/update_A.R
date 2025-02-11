@@ -38,7 +38,7 @@ update_nu_alpha <- function(A, gamma_alpha, prior_lst, data){
     for (s in 1:S){
       a_nu_star <- a_nu + 1/2
       b_nu_star <- b_nu + A[q,s]^2/(2*gamma_alpha[q,s])
-      nu_alpha_update[q,s] <- rinvgamma(1, a_nu_star, b_nu_star)
+      nu_alpha_update[q,s] <- LaplacesDemon::rinvgamma(1, a_nu_star, b_nu_star)
     }
   }
 

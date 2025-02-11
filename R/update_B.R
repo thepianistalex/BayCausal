@@ -89,7 +89,7 @@ update_nu_beta <- function(B, gamma_beta, prior_lst){
 
         a_nu_star <- a_nu + 1/2
         b_nu_star <- b_nu + B[q,p]^2/(2*gamma_beta[q,p])
-        nu_beta_update[q,p] <- rinvgamma(1, a_nu_star, b_nu_star)
+        nu_beta_update[q,p] <- LaplacesDemon::rinvgamma(1, a_nu_star, b_nu_star)
 
       }
 
