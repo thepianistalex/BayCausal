@@ -45,7 +45,7 @@ set_init_default <- function(seed, P_star, data, prior_lst){
   for (q in 1:Q){
     for (s in 1:S){
       gamma_alpha_init[q,s] <- sample(c(nu_0,1), 1, prob=c(0.5,0.5))
-      nu_alpha_init[q,s] <- 1
+      nu_alpha_init[q,s] <- 0.01
       A_init[q,s] <- rnorm(1, 0, sqrt(gamma_alpha_init[q,s]*nu_alpha_init[q,s]))
     }
   }
@@ -54,7 +54,7 @@ set_init_default <- function(seed, P_star, data, prior_lst){
   for (q in 1:Q){
     for (p in 1:Q){
       gamma_beta_init[q,p] <- sample(c(nu_0,1), 1, prob=c(0.5,0.5))
-      nu_beta_init[q,p] <- 1
+      nu_beta_init[q,p] <- 0.01
       B_init[q,p] <- rnorm(1, 0, sqrt(gamma_beta_init[q,p]*nu_beta_init[q,p]))
     }
   }

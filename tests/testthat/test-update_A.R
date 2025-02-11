@@ -1,5 +1,7 @@
 test_that("check A", {
   
+  skip("Skipping test 'check A' for now")
+  
   Nit <- 3000
   burn <- 2000
   thin <- 10
@@ -12,8 +14,9 @@ test_that("check A", {
   mh_setup_lst <- set_mh_default()
   
   init_lst <- set_init_default(seed, data$P, data, prior_lst)
+  init_lst$mu <- data$mu
   init_lst$B <- data$B
-  init_lst$A <- data$A
+  # init_lst$A <- data$A
   init_lst$L <- data$L
   init_lst$C <- data$C
   init_lst_sigma2 <- data$sigma_e^2

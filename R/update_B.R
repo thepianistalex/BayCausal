@@ -18,8 +18,8 @@ update_B <- function(B, gamma_beta, nu_beta, A, mu, L, C, sigma2, mh_step_size, 
         # jacobian matrix norm constant
         if (max(Mod(eigen(B_new)$values)) < 1){
           # calculate the acceptance ratio
-          ratio <- compute_loglik_B_laplace_faster_rcpp(q, B_new, A, L, C, mu, sigma2, Y, X) -
-            compute_loglik_B_laplace_faster_rcpp(q, B_update, A, L, C, mu, sigma2, Y, X) +
+          ratio <- compute_loglik_B_rcpp(q, B_new, A, L, C, mu, sigma2, Y, X) -
+            compute_loglik_B_rcpp(q, B_update, A, L, C, mu, sigma2, Y, X) +
             dnorm(x=B_new[q,p], 0, sqrt(gamma_beta[q,p]*nu_beta[q,p]), log=T) -
             dnorm(x=B_update[q,p], 0, sqrt(gamma_beta[q,p]*nu_beta[q,p]), log=T)
           # accept or reject

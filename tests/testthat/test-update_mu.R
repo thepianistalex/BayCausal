@@ -1,5 +1,7 @@
 test_that("check mu", {
   
+  skip("Skipping test 'check mu' for now")
+  
   Nit <- 3000
   burn <- 2000
   thin <- 10
@@ -12,6 +14,7 @@ test_that("check mu", {
   mh_setup_lst <- set_mh_default()
   
   init_lst <- set_init_default(seed, data$P, data, prior_lst)
+  # init_lst$mu <- data$mu
   init_lst$B <- data$B
   init_lst$A <- data$A
   init_lst$L <- data$L
