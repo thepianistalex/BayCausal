@@ -2,6 +2,7 @@
 
 export(extract_P_star)
 export(extract_post_mean)
+export(generate_toy_data)
 export(glvcausal)
 export(post_process_L)
 export(set_chain_null)
