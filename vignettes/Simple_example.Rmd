@@ -1,0 +1,74 @@
+---
+title: "Simple_example"
+output:
+  rmarkdown::html_vignette:
+    toc : true
+    toc_depth: 3
+    number_sections: yes
+vignette: >
+  %\VignetteIndexEntry{Simple_example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(glvcausal)
+```
+
+# Basic setup
+```{r}
+seed <- 0
+P_star <- 1
+Nit <- 10000
+burn <- 5000
+thin <- 10
+```
+
+# Generate toy data
+```{r}
+data <- generate_toy_data()
+```
+
+
+# Set up prior, initial values, and chain 
+```{r}
+mh_setup_lst <- set_mh_default()
+prior_lst <- set_prior_default(data)
+init_lst <- set_init_default(seed, P_star, data, prior_lst)
+chain_setup_lst <- set_chain_null()
+chain_setup_lst$Nit <- Nit
+chain_setup_lst$burn <- burn
+chain_setup_lst$thin <- thin
+chain_setup_lst$seed <- seed
+```
+
+# Run the algorithm
+```{r}
+res <- glvcausal(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
+```
+
+# Result
+
+## P_star
+```{r}
+table(extract_P_star(res))
+```
+
+## B
+```{r}
+extract_post_mean(res, "B", 2)
+```
+
+## L
+```{r}
+round(extract_post_mean(res, "L", 1),2)
+```
+
+
