@@ -3,6 +3,7 @@
 export(extract_P_star)
 export(extract_post_mean)
 export(glvcausal)
+export(post_process_L)
 export(set_chain_null)
 export(set_init_default)
 export(set_mh_default)

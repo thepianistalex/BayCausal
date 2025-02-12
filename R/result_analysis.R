@@ -34,3 +34,33 @@ extract_P_star <- function(res) {
   return(P_star_samples)
 }
 
+
+
+#' Title
+#'
+#' @param res 
+#' @param order_flag 
+#' @param cutoff 
+#'
+#' @returns post processed samples
+#' @export
+post_process_L <- function(res, order_flag, cutoff = Inf) {
+  
+  processed_res <- lapply(res, function(sample) {
+    
+    if (order_flag) {
+      ord <- order(sample$pivot, decreasing = FALSE)
+      sample$L <- sample$L[, ord, drop = FALSE]
+      sample$sparsity_matrix <- sample$sparsity_matrix[, ord, drop = FALSE]
+      sample$pivot <- sample$pivot[ord]
+    }
+    
+    if (is.finite(cutoff)) {
+      sample$L[abs(sample$L) < cutoff] <- 0
+    }
+    
+    return(sample)
+  })
+  
+  return(processed_res)
+}
