@@ -290,6 +290,39 @@ arma::mat update_A_rcpp(const arma::mat &gamma_alpha, const arma::mat &nu_alpha,
 
 
 // [[Rcpp::export]]
+arma::mat update_L_free_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B,
+                             const arma::mat &C, const arma::mat &tau, const arma::vec &sigma2,
+                             const arma::mat &Y, const arma::mat &X) {
+  
+  int Q = mu.n_elem;
+  int P_star = C.n_cols;
+  mat L_update(Q, P_star, fill::zeros);
+  
+  for (int q = 0; q < Q; q++) {
+    mat D_L_q_inv = 0.001 * eye(P_star, P_star);
+    
+    mat L_placeholder;
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L_placeholder, C, mu, Q, X.n_cols, P_star, Y, X, true, true, true, false);
+    
+    vec weight = tau.col(q) / sigma2(q);
+    
+    // In R: t(C) %*% ((tau[,q]/sigma2[q])*C)
+    // In Armadillo, multiply each column of C by the weight vector (elementwise multiplication on rows)
+    mat weighted_C = C.each_col() % weight;
+    mat temp = D_L_q_inv + C.t() * weighted_C;
+    
+    mat V_n = inv_sympd(temp);
+    vec mu_n = V_n * ( C.t() * (Y_tilde_q % weight) );
+    
+    L_update.row(q) = conv_to<rowvec>::from(rmvn_rcpp(1, mu_n, V_n));
+  }
+  
+  return L_update;
+}
+
+
+
+// [[Rcpp::export]]
 arma::mat update_C_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B, 
                         const arma::mat &L, const arma::mat &tau, 
                         const arma::vec &sigma2, int &P_star,

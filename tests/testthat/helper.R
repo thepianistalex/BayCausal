@@ -168,3 +168,29 @@ glvcausal_check_sigma2_tau <- function(data, mh_setup_lst, init_lst, prior_lst, 
   return(mcmc_lst)
   
 }
+
+
+
+glvcausal_check_L_free <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+  
+  set.seed(chain_setup_lst$seed)
+  
+  param_all_lst <- init_lst
+  mcmc_lst <- list()
+  mcmc_lst_count <- 0
+  
+  for(it in 2:chain_setup_lst$Nit){
+    
+    param_all_lst$L_free <- update_L_free_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$C, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
+    param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L_free, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
+    
+    if(save_check(it, chain_setup_lst$burn, chain_setup_lst$thin)){
+      mcmc_lst_count <- mcmc_lst_count + 1
+      mcmc_lst[[mcmc_lst_count]] <- param_all_lst
+    }
+    
+  }
+  
+  return(mcmc_lst)
+  
+}

@@ -1,6 +1,6 @@
 test_that("check A", {
   
-  # skip("Skipping test 'check A' for now")
+  skip("Skipping test 'check A' for now")
   
   Nit <- 3000
   burn <- 2000

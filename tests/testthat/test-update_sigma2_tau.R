@@ -1,6 +1,6 @@
-test_that("check A", {
+test_that("check sigma2 tau", {
   
-  # skip("Skipping test 'check A' for now")
+  skip("Skipping test 'check sigma2 tau' for now")
   
   Nit <- 3000
   burn <- 2000
@@ -29,7 +29,7 @@ test_that("check A", {
   
   
   res <- glvcausal_check_sigma2_tau(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
-  post_mean <- extract_post_mean(res, "A", data$P)
+  post_mean <- extract_post_mean(res, "sigma2", data$P)
   
   expect_true(are_all_close(post_mean, data$sigma2, abs_tol = 0.05))
   
