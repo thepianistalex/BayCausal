@@ -21,7 +21,7 @@ glvcausal_free_L <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setu
     param_all_lst$rho_beta <- update_rho_beta(param_all_lst$gamma_beta, prior_lst)
     
     param_all_lst$L_free <- update_L_free_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$C_free, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
-    param_all_lst$C_free <- update_C_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$L_free, param_all_lst$tau, param_all_lst$sigma2, param_all_lst$P_star, data$Y, data$X)
+    param_all_lst$C_free <- update_C_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$L_free, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
     
     param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L_free, param_all_lst$C_free, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
     param_all_lst$sigma2 <- c(update_sigma2_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L_free, param_all_lst$C_free, param_all_lst$mu, param_all_lst$tau, data$Y, data$X, prior_lst$a_sigma, prior_lst$b_sigma))

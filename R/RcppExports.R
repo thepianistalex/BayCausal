@@ -41,8 +41,8 @@ update_L_free_rcpp <- function(mu, A, B, C, tau, sigma2, Y, X) {
     .Call(`_glvcausal_update_L_free_rcpp`, mu, A, B, C, tau, sigma2, Y, X)
 }
 
-update_C_rcpp <- function(mu, A, B, L, tau, sigma2, P_star, Y, X) {
-    .Call(`_glvcausal_update_C_rcpp`, mu, A, B, L, tau, sigma2, P_star, Y, X)
+update_C_rcpp <- function(mu, A, B, L, tau, sigma2, Y, X) {
+    .Call(`_glvcausal_update_C_rcpp`, mu, A, B, L, tau, sigma2, Y, X)
 }
 
 update_tau_rcpp <- function(B, A, L, C, mu, sigma2, Y, X) {

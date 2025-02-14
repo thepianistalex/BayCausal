@@ -190,8 +190,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // update_C_rcpp
-arma::mat update_C_rcpp(const arma::vec& mu, const arma::mat& A, const arma::mat& B, const arma::mat& L, const arma::mat& tau, const arma::vec& sigma2, int& P_star, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_C_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP LSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP P_starSEXP, SEXP YSEXP, SEXP XSEXP) {
+arma::mat update_C_rcpp(const arma::vec& mu, const arma::mat& A, const arma::mat& B, const arma::mat& L, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
+RcppExport SEXP _glvcausal_update_C_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP LSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -201,10 +201,9 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::mat& >::type L(LSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type tau(tauSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type sigma2(sigma2SEXP);
-    Rcpp::traits::input_parameter< int& >::type P_star(P_starSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    rcpp_result_gen = Rcpp::wrap(update_C_rcpp(mu, A, B, L, tau, sigma2, P_star, Y, X));
+    rcpp_result_gen = Rcpp::wrap(update_C_rcpp(mu, A, B, L, tau, sigma2, Y, X));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -258,7 +257,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_glvcausal_update_mu_rcpp", (DL_FUNC) &_glvcausal_update_mu_rcpp, 8},
     {"_glvcausal_update_A_rcpp", (DL_FUNC) &_glvcausal_update_A_rcpp, 10},
     {"_glvcausal_update_L_free_rcpp", (DL_FUNC) &_glvcausal_update_L_free_rcpp, 8},
-    {"_glvcausal_update_C_rcpp", (DL_FUNC) &_glvcausal_update_C_rcpp, 9},
+    {"_glvcausal_update_C_rcpp", (DL_FUNC) &_glvcausal_update_C_rcpp, 8},
     {"_glvcausal_update_tau_rcpp", (DL_FUNC) &_glvcausal_update_tau_rcpp, 8},
     {"_glvcausal_update_sigma2_rcpp", (DL_FUNC) &_glvcausal_update_sigma2_rcpp, 10},
     {NULL, NULL, 0}

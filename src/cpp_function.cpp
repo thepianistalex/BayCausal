@@ -325,9 +325,10 @@ arma::mat update_L_free_rcpp(const arma::vec &mu, const arma::mat &A, const arma
 // [[Rcpp::export]]
 arma::mat update_C_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B, 
                         const arma::mat &L, const arma::mat &tau, 
-                        const arma::vec &sigma2, int &P_star,
+                        const arma::vec &sigma2,
                         const arma::mat &Y, const arma::mat &X) {
   
+  int P_star = L.n_cols;
   int n = Y.n_rows;
   vec Y_tilde_i, mu_n;
   mat Sigma_i_inv, V_n;
