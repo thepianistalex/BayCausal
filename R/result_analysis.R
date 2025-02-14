@@ -64,3 +64,10 @@ post_process_L <- function(res, order_flag, cutoff = Inf) {
   
   return(processed_res)
 }
+
+
+
+get_mode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
