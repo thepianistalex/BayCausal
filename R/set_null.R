@@ -55,14 +55,14 @@ set_mh_null <- function(){
 #'
 #' @returns a list containing chain setup
 #' @export
-set_chain_null <- function(){
+set_chain <- function(Nit, burn, thin, seed){
   
   chain_setup_lst <- list()
   
-  chain_setup_lst$Nit <- NA
-  chain_setup_lst$burn <- NA
-  chain_setup_lst$thin <- NA
-  chain_setup_lst$seed <- NA
+  chain_setup_lst$Nit <- Nit
+  chain_setup_lst$burn <- burn
+  chain_setup_lst$thin <- thin
+  chain_setup_lst$seed <- seed
   
   return(chain_setup_lst)
 }
