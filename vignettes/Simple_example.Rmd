@@ -42,11 +42,7 @@ data <- generate_toy_data()
 mh_setup_lst <- set_mh_default()
 prior_lst <- set_prior_default(data)
 init_lst <- set_init_default(seed, P_star, data, prior_lst)
-chain_setup_lst <- set_chain_null()
-chain_setup_lst$Nit <- Nit
-chain_setup_lst$burn <- burn
-chain_setup_lst$thin <- thin
-chain_setup_lst$seed <- seed
+chain_setup_lst <- set_chain(Nit, burn, thin, seed)
 ```
 
 # Run the algorithm
