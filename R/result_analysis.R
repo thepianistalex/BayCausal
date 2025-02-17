@@ -79,6 +79,40 @@ post_process_L <- function(res, order_flag, cutoff = Inf) {
 
 #' Title
 #'
+#' @param L_mean 
+#' @param order_flag 
+#' @param cutoff 
+#'
+#' @returns post processed L posterior mean
+#' @export
+post_process_L_mean <- function(L_mean, order_flag, cutoff = Inf) {
+  
+  processed_L_mean <- L_mean
+  pivot <- apply(L_mean, 2, function(col_j) {
+    nz <- which(col_j != 0)
+    if (length(nz) == 0) {
+      NA_integer_  
+    } else {
+      nz[1] 
+    }
+  })
+  
+  if (is.finite(cutoff)) {
+    processed_L_mean[abs(processed_L_mean) < cutoff] <- 0
+  }
+  
+  if (order_flag) {
+    ord <- order(pivot, decreasing = FALSE)
+    processed_L_mean <- processed_L_mean[, ord, drop = FALSE]
+  }
+  
+  return(processed_L_mean)
+}
+
+
+
+#' Title
+#'
 #' @param v 
 #'
 #' @returns mode of the vector
