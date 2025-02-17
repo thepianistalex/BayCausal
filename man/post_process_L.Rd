@@ -4,14 +4,16 @@
 \alias{post_process_L}
 \title{Title}
 \usage{
-post_process_L(res, order_flag, cutoff = Inf)
+post_process_L(res, order_flag, pos_sign, cutoff = Inf)
 }
 \arguments{
-\item{res}{}
+\item{res}{A list containing MCMC samples}
 
-\item{order_flag}{}
+\item{order_flag}{A logical indicating whether to order the columns of L}
 
-\item{cutoff}{}
+\item{pos_sign}{A logical indicating whether to enforce positive sign on the first non-zero element of each column of L}
+
+\item{cutoff}{A numeric value indicating the threshold below which the elements of L are set to zero}
 }
 \value{
 post processed samples

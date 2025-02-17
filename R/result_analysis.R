@@ -38,13 +38,14 @@ extract_P_star <- function(res) {
 
 #' Title
 #'
-#' @param res 
-#' @param order_flag 
-#' @param cutoff 
+#' @param res A list containing MCMC samples
+#' @param order_flag A logical indicating whether to order the columns of L
+#' @param pos_sign A logical indicating whether to enforce positive sign on the first non-zero element of each column of L
+#' @param cutoff A numeric value indicating the threshold below which the elements of L are set to zero
 #'
 #' @returns post processed samples
 #' @export
-post_process_L <- function(res, order_flag, cutoff = Inf) {
+post_process_L <- function(res, order_flag, pos_sign, cutoff = Inf) {
   
   processed_res <- lapply(res, function(sample) {
     
@@ -61,13 +62,20 @@ post_process_L <- function(res, order_flag, cutoff = Inf) {
       })
     }
     
+    if (pos_sign) {
+      for (j in 1:ncol(sample$L)) {
+        if (sample$L[sample$pivot[j], j] < 0) {
+          sample$L[, j] <- -sample$L[, j]
+        }
+      }
+    }
+    
     if (order_flag) {
       ord <- order(sample$pivot, decreasing = FALSE)
       sample$L <- sample$L[, ord, drop = FALSE]
       sample$sparsity_matrix <- sample$sparsity_matrix[, ord, drop = FALSE]
       sample$pivot <- sample$pivot[ord]
     }
-    
     
     return(sample)
   })
@@ -79,16 +87,22 @@ post_process_L <- function(res, order_flag, cutoff = Inf) {
 
 #' Title
 #'
-#' @param L_mean 
-#' @param order_flag 
-#' @param cutoff 
+#' @param L_mean The posterior mean of L
+#' @param order_flag A logical indicating whether to order the columns of L
+#' @param pos_sign A logical indicating whether to enforce positive sign on the first non-zero element of each column of L
+#' @param cutoff A numeric value indicating the threshold below which the elements of L are set to zero
 #'
 #' @returns post processed L posterior mean
 #' @export
-post_process_L_mean <- function(L_mean, order_flag, cutoff = Inf) {
+post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = Inf) {
   
   processed_L_mean <- L_mean
-  pivot <- apply(L_mean, 2, function(col_j) {
+  
+  if (is.finite(cutoff)) {
+    processed_L_mean[abs(processed_L_mean) < cutoff] <- 0
+  }
+  
+  pivot <- apply(processed_L_mean, 2, function(col_j) {
     nz <- which(col_j != 0)
     if (length(nz) == 0) {
       NA_integer_  
@@ -97,8 +111,12 @@ post_process_L_mean <- function(L_mean, order_flag, cutoff = Inf) {
     }
   })
   
-  if (is.finite(cutoff)) {
-    processed_L_mean[abs(processed_L_mean) < cutoff] <- 0
+  if (pos_sign) {
+    for (j in 1:ncol(processed_L_mean)) {
+      if (processed_L_mean[pivot[j], j] < 0) {
+        processed_L_mean[, j] <- -processed_L_mean[, j]
+      }
+    }
   }
   
   if (order_flag) {
