@@ -53,7 +53,7 @@ fa_laplace <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst,
 
     if(save_check(it, chain_setup_lst$burn, chain_setup_lst$thin)){
       mcmc_lst_count <- mcmc_lst_count + 1
-      mcmc_lst[[mcmc_lst_count]] <- save_param_res(param_all_lst)
+      mcmc_lst[[mcmc_lst_count]] <- save_param_res_fa(param_all_lst)
       }
     
     if(verbose){
