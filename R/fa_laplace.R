@@ -14,7 +14,7 @@ fa_laplace <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst,
   set.seed(chain_setup_lst$seed)
 
   param_all_lst <- init_lst
-  param_all_lst$B <- 0
+  param_all_lst$B <- matrix(0, nrow = ncol(data$Y), ncol = ncol(data$Y))
   mcmc_lst <- list()
   mcmc_lst_count <- 0
 
