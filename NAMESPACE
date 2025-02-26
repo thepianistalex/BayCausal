@@ -2,10 +2,11 @@
 
 export(extract_P_star)
 export(extract_post_mean)
-export(fa_laplace)
 export(generate_toy_data)
 export(get_mode)
 export(glvcausal)
+export(lingcausal)
+export(lingfa)
 export(post_process_L)
 export(post_process_L_mean)
 export(set_chain)

@@ -35,3 +35,14 @@ save_param_res_fa <- function(param_all_lst){
   
   return(param_res_lst)
 }
+
+save_param_res_lingcausal <- function(param_all_lst){
+  
+  param_res_lst <- list()
+  param_res_lst$mu <- param_all_lst$mu
+  param_res_lst$A <- param_all_lst$A
+  param_res_lst$B <- param_all_lst$B
+  param_res_lst$gamma_beta <- param_all_lst$gamma_beta
+  
+  return(param_res_lst)
+}

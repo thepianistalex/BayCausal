@@ -9,7 +9,7 @@
 #'
 #' @returns a list containing mcmc samples
 #' @export
-fa_laplace <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+lingfa <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
 
   set.seed(chain_setup_lst$seed)
 
