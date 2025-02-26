@@ -2,6 +2,7 @@
 
 export(extract_P_star)
 export(extract_post_mean)
+export(fa_laplace)
 export(generate_toy_data)
 export(get_mode)
 export(glvcausal)
