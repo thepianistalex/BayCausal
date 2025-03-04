@@ -1,8 +1,11 @@
 #' Title
 #'
+#' @param include_X whether to include X in the toy data
+#' @param include_C whether to include C in the toy data
+#'
 #' @returns toy data list
 #' @export
-generate_toy_data <- function(){
+generate_toy_data <- function(include_X = TRUE, include_C = TRUE){
   
   set.seed(0)
   Q <- 3
