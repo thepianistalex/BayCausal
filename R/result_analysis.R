@@ -45,7 +45,7 @@ extract_P_star <- function(res) {
 #'
 #' @returns post processed samples
 #' @export
-post_process_L <- function(res, order_flag, pos_sign, cutoff = Inf) {
+post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf) {
   
   processed_res <- lapply(res, function(sample) {
     
@@ -54,12 +54,13 @@ post_process_L <- function(res, order_flag, pos_sign, cutoff = Inf) {
       sample$sparsity_matrix <- ifelse(sample$L == 0, 0, 1)
       sample$pivot <- apply(sample$L, 2, function(col_j) {
         nz <- which(col_j != 0)
-        if (length(nz) == 0) {
-          NA_integer_  
-        } else {
-          nz[1] 
-        }
+        if (length(nz) == 0) NA_integer_ else nz[1]
       })
+      nonzero_cols <- !is.na(sample$pivot)
+      sample$P_star <- sum(nonzero_cols)
+      sample$L <- sample$L[, nonzero_cols, drop = FALSE]
+      sample$pivot <- sample$pivot[nonzero_cols]
+      sample$sparsity_matrix <- sample$sparsity_matrix[, nonzero_cols, drop = FALSE]
     }
     
     if (pos_sign) {
@@ -94,7 +95,7 @@ post_process_L <- function(res, order_flag, pos_sign, cutoff = Inf) {
 #'
 #' @returns post processed L posterior mean
 #' @export
-post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = Inf) {
+post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = -Inf) {
   
   processed_L_mean <- L_mean
   
@@ -110,6 +111,9 @@ post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = Inf) {
       nz[1] 
     }
   })
+  nonzero_cols <- !is.na(pivot)
+  processed_L_mean <- processed_L_mean[, nonzero_cols, drop = FALSE]
+  pivot <- pivot[nonzero_cols]
   
   if (pos_sign) {
     for (j in 1:ncol(processed_L_mean)) {
