@@ -4,7 +4,14 @@
 \alias{generate_toy_data}
 \title{Title}
 \usage{
-generate_toy_data()
+generate_toy_data(include_B = TRUE, include_X = TRUE, include_C = TRUE)
+}
+\arguments{
+\item{include_B}{whether to include B in the toy data}
+
+\item{include_X}{whether to include X in the toy data}
+
+\item{include_C}{whether to include C in the toy data}
 }
 \value{
 toy data list

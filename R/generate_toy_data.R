@@ -1,11 +1,12 @@
 #' Title
 #'
+#' @param include_B whether to include B in the toy data
 #' @param include_X whether to include X in the toy data
 #' @param include_C whether to include C in the toy data
 #'
 #' @returns toy data list
 #' @export
-generate_toy_data <- function(include_X = TRUE, include_C = TRUE){
+generate_toy_data <- function(include_B = TRUE, include_X = TRUE, include_C = TRUE){
   
   set.seed(0)
   Q <- 3
@@ -43,9 +44,27 @@ generate_toy_data <- function(include_X = TRUE, include_C = TRUE){
   }
   
   Y <- matrix(NA, n, Q)
-  mix_mat <- solve(diag(Q)-B)
+  
+  if(include_B){
+    mix_mat <- solve(diag(Q)-B)
+  } else{
+    mix_mat <- diag(Q)
+  }
+  
   for(i in 1:n){
-    Y[i,] <- mix_mat %*% (mu + A%*%X[i,] + L%*%C[i,] + E[i,])
+    Y[i,] <- mix_mat %*% (mu + E[i,])
+  }
+  
+  if(include_X){
+    for(i in 1:n){
+      Y[i,] <- Y[i,] + mix_mat %*% A %*% X[i,]
+    }
+  }
+  
+  if(include_C){
+    for(i in 1:n){
+      Y[i,] <- Y[i,] + mix_mat %*% L %*% C[i,]
+    }
   }
   
   data <- list(Y = Y, X = X, mu = mu, B = B, A = A, L = L, C = C, sigma_e = sigma_e, Q = Q, S = S, P = P, n = n)
