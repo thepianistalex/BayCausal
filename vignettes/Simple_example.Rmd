@@ -52,19 +52,49 @@ res <- glvcausal(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE
 
 # Result
 
-## P_star
+## P_star {.tabset .tabset-fade .tabset-pills}
+
+### Truth
+The true value of P_star is `r data$P`.
+
+### MCMC
 ```{r}
 table(extract_P_star(res))
 ```
 
-## B
+## B {.tabset .tabset-fade .tabset-pills}
+
+### Truth
+```{r}
+round(data$B,2)
+```
+
+### MCMC
 ```{r}
 extract_post_mean(res, "B", 2)
 ```
 
-## L
+## L {.tabset .tabset-fade .tabset-pills}
+
+### Truth
 ```{r}
-round(extract_post_mean(res, "L", 1),2)
+round(data$L,2)
+```
+
+### MCMC
+```{r}
+round(extract_post_mean(res, "L", get_mode(extract_P_star(res))),2)
+```
+
+### L post processed
+```{r}
+res_processed <- post_process_L(res,  order_flag = TRUE, pos_sign = TRUE, cutoff = 0.1)
+round(extract_post_mean(res_processed, "L", get_mode(extract_P_star(res))),2)
+```
+
+### P_star post processed
+```{r}
+table(extract_P_star(res_processed))
 ```
 
 
