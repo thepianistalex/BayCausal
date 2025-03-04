@@ -46,3 +46,18 @@ save_param_res_lingcausal <- function(param_all_lst){
   
   return(param_res_lst)
 }
+
+save_param_res_wo_x <- function(param_all_lst){
+  
+  param_res_lst <- list()
+  param_res_lst$mu <- param_all_lst$mu
+  param_res_lst$B <- param_all_lst$B
+  param_res_lst$gamma_beta <- param_all_lst$gamma_beta
+  param_res_lst$L <- param_all_lst$L
+  param_res_lst$sigma2 <- param_all_lst$sigma2
+  param_res_lst$P_star <- param_all_lst$P_star
+  param_res_lst$sparsity_matrix <- param_all_lst$sparsity_matrix
+  param_res_lst$pivot <- param_all_lst$pivot
+  
+  return(param_res_lst)
+}
