@@ -24,6 +24,23 @@ extract_post_mean <- function(res, param, P_star) {
 #' Title
 #'
 #' @param res 
+#' @param param 
+#'
+#' @returns posterior mean of the parameter
+#' @export
+extract_post_mean_all <- function(res, param) {
+  
+  param_samples <- lapply(res, function(x) x[[param]])
+  post_mean_param <- Reduce("+", param_samples) / length(param_samples)
+  
+  return(post_mean_param)
+}
+
+
+
+#' Title
+#'
+#' @param res 
 #'
 #' @returns posterior samples of P_star
 #' @export

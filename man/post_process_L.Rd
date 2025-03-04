@@ -4,7 +4,7 @@
 \alias{post_process_L}
 \title{Title}
 \usage{
-post_process_L(res, order_flag, pos_sign, cutoff = Inf)
+post_process_L(res, order_flag, pos_sign, cutoff = -Inf)
 }
 \arguments{
 \item{res}{A list containing MCMC samples}

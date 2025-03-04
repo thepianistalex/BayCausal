@@ -1,0 +1,66 @@
+---
+title: "Simple_example"
+output:
+  rmarkdown::html_vignette:
+    toc : true
+    toc_depth: 3
+    number_sections: yes
+vignette: >
+  %\VignetteIndexEntry{Simple_example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(glvcausal)
+```
+
+# Basic setup
+```{r}
+seed <- 0
+P_star <- 1
+Nit <- 10000
+burn <- 5000
+thin <- 10
+```
+
+# Generate toy data
+```{r}
+data <- generate_toy_data(include_C = FALSE)
+```
+
+
+# Set up prior, initial values, and chain 
+```{r}
+mh_setup_lst <- set_mh_default()
+prior_lst <- set_prior_default(data)
+init_lst <- set_init_default(seed, P_star, data, prior_lst)
+chain_setup_lst <- set_chain(Nit, burn, thin, seed)
+```
+
+# Run the algorithm
+```{r}
+res <- lingcausal(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
+```
+
+# Result
+
+## B
+
+### Truth
+```{r}
+round(data$B,2)
+```
+
+### MCMC
+```{r}
+extract_post_mean_all(res, "B")
+```
+

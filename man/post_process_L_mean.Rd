@@ -4,7 +4,7 @@
 \alias{post_process_L_mean}
 \title{Title}
 \usage{
-post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = Inf)
+post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = -Inf)
 }
 \arguments{
 \item{L_mean}{The posterior mean of L}
