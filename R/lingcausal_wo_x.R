@@ -16,7 +16,7 @@ lingcausal_wo_x <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup
   param_all_lst <- init_lst
   param_all_lst$L <- matrix(0, nrow = ncol(data$Y), ncol = 2)
   param_all_lst$C <- matrix(0, nrow = nrow(data$Y), ncol = 2)
-  param_all_lst$X <- matrix(0, nrow = nrow(data$Y), ncol = 2)
+  data$X <- matrix(0, nrow = nrow(data$Y), ncol = 2)
   param_all_lst$A <- matrix(0, nrow = ncol(data$Y), ncol = 2)
   mcmc_lst <- list()
   mcmc_lst_count <- 0
