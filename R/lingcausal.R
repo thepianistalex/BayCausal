@@ -14,8 +14,8 @@ lingcausal <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst,
   set.seed(chain_setup_lst$seed)
 
   param_all_lst <- init_lst
-  param_all_lst$L <- matrix(0, nrow = ncol(data$Y), ncol = 1)
-  param_all_lst$C <- matrix(0, nrow = nrow(data$Y), ncol = 1)
+  param_all_lst$L <- matrix(0, nrow = ncol(data$Y), ncol = 2)
+  param_all_lst$C <- matrix(0, nrow = nrow(data$Y), ncol = 2)
   mcmc_lst <- list()
   mcmc_lst_count <- 0
 
