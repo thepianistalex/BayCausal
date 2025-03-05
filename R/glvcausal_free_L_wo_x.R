@@ -1,4 +1,4 @@
-glvcausal_free_L <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+glvcausal_free_L_wo_x <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
   
   set.seed(chain_setup_lst$seed)
   

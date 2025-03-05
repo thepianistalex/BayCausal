@@ -1,8 +1,9 @@
-glvcausal_only_UGLT <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+glvcausal_only_UGLT_wo_x <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
   
   set.seed(chain_setup_lst$seed)
   
   param_all_lst <- init_lst
+  param_all_lst$A <- matrix(0, nrow = ncol(data$Y), ncol = 2)
   data$X <- matrix(0, nrow = nrow(data$Y), ncol = 2)
   mcmc_all_lst <- list()
   mcmc_all_lst_count <- 0
