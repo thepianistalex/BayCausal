@@ -4,7 +4,7 @@
 \alias{set_prior_default}
 \title{Title}
 \usage{
-set_prior_default(data)
+set_prior_default(data, Eq)
 }
 \value{
 a list containing chain setup

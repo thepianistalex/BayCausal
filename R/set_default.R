@@ -199,7 +199,7 @@ set_mh_default <- function(){
 #'
 #' @returns a list containing chain setup
 #' @export
-set_prior_default <- function(data){
+set_prior_default <- function(data, Eq){
   
   prior_lst <- list()
   
@@ -211,7 +211,6 @@ set_prior_default <- function(data){
   prior_lst$b_sigma <- 1
   prior_lst$nu_0 <- 2.5e-4
   prior_lst$a_a1 <- 6
-  Eq <- 1
   prior_lst$H <- ncol(data$Y) - 1
   prior_lst$b_a1 <- prior_lst$a_a1*(prior_lst$H-Eq)/(prior_lst$H*Eq)
   prior_lst$a_a2 <- prior_lst$a_a1
