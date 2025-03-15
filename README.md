@@ -12,7 +12,5 @@ in the true underlying directed cyclic graph.
 install.packages("remotes")
 remotes::install_github("thepianistalex/glvcausal")
 
-## Vignette
+## Example use
 Please knit the vignette under the vignette folder for an example use of the main functions in the package.
-
-## Reference manual
