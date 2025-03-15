@@ -2,7 +2,7 @@
 % Please edit documentation in R/result_analysis.R
 \name{post_process_L_mean}
 \alias{post_process_L_mean}
-\title{Title}
+\title{Post processes the posterior mean of L}
 \usage{
 post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = -Inf)
 }
@@ -19,5 +19,5 @@ post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = -Inf)
 post processed L posterior mean
 }
 \description{
-Title
+Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
 }

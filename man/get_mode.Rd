@@ -2,16 +2,16 @@
 % Please edit documentation in R/result_analysis.R
 \name{get_mode}
 \alias{get_mode}
-\title{Title}
+\title{Gets the mode of a vector}
 \usage{
 get_mode(v)
 }
 \arguments{
-\item{v}{}
+\item{v}{A vector}
 }
 \value{
 mode of the vector
 }
 \description{
-Title
+Gets the mode of a vector
 }

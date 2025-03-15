@@ -2,13 +2,13 @@
 % Please edit documentation in R/set_default.R
 \name{set_mh_default}
 \alias{set_mh_default}
-\title{Title}
+\title{Set default chain setup}
 \usage{
 set_mh_default()
 }
 \value{
-a list containing chain setup
+a list containing default chain setup
 }
 \description{
-Title
+Set default chain setup
 }

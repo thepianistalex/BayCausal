@@ -1,8 +1,10 @@
-#' Title
+#' Extracts the posterior mean of a parameter from the MCMC samples
+#' 
+#' Extracts the posterior mean of a parameter from the MCMC samples for a given value of P_star
 #'
-#' @param res 
-#' @param param 
-#' @param P_star 
+#' @param res A list containing MCMC samples
+#' @param param The parameter to extract
+#' @param P_star Only extract MCMC samples with this value of P_star
 #'
 #' @returns posterior mean of the parameter
 #' @export
@@ -21,10 +23,12 @@ extract_post_mean <- function(res, param, P_star) {
 
 
 
-#' Title
+#' Extracts the posterior mean of a parameter from the MCMC samples
+#' 
+#' Extracts the posterior mean of a parameter from all the MCMC samples
 #'
-#' @param res 
-#' @param param 
+#' @param res A list containing MCMC samples
+#' @param param The parameter to extract
 #'
 #' @returns posterior mean of the parameter
 #' @export
@@ -38,9 +42,11 @@ extract_post_mean_all <- function(res, param) {
 
 
 
-#' Title
+#' Extracts the posterior samples of P_star from the MCMC samples
 #'
-#' @param res 
+#' Extracts the posterior samples of P_star from the MCMC samples
+#'
+#' @param res A list containing MCMC samples
 #'
 #' @returns posterior samples of P_star
 #' @export
@@ -53,7 +59,9 @@ extract_P_star <- function(res) {
 
 
 
-#' Title
+#' Post processes the MCMC samples of L
+#' 
+#' Post processes the MCMC samples of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
 #'
 #' @param res A list containing MCMC samples
 #' @param order_flag A logical indicating whether to order the columns of L
@@ -103,7 +111,9 @@ post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf) {
 
 
 
-#' Title
+#' Post processes the posterior mean of L
+#' 
+#' Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
 #'
 #' @param L_mean The posterior mean of L
 #' @param order_flag A logical indicating whether to order the columns of L
@@ -150,9 +160,9 @@ post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = -Inf) {
 
 
 
-#' Title
+#' Gets the mode of a vector
 #'
-#' @param v 
+#' @param v A vector
 #'
 #' @returns mode of the vector
 #' @export

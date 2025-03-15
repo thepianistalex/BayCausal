@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_default.R
 \name{set_init_default_wo_x}
 \alias{set_init_default_wo_x}
-\title{Title}
+\title{Set default initial values for the chain without the covariate part}
 \usage{
 set_init_default_wo_x(seed, P_star, data, prior_lst)
 }
@@ -19,5 +19,5 @@ set_init_default_wo_x(seed, P_star, data, prior_lst)
 a list containing initial values
 }
 \description{
-Title
+Set default initial values for the chain without the covariate part
 }

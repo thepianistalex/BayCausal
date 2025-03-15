@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_default.R
 \name{set_prior_default}
 \alias{set_prior_default}
-\title{Title}
+\title{Set default prior hyper parameters}
 \usage{
 set_prior_default(data, Eq)
 }
@@ -10,5 +10,5 @@ set_prior_default(data, Eq)
 a list containing chain setup
 }
 \description{
-Title
+Set default prior hyper parameters
 }

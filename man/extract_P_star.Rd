@@ -2,16 +2,16 @@
 % Please edit documentation in R/result_analysis.R
 \name{extract_P_star}
 \alias{extract_P_star}
-\title{Title}
+\title{Extracts the posterior samples of P_star from the MCMC samples}
 \usage{
 extract_P_star(res)
 }
 \arguments{
-\item{res}{}
+\item{res}{A list containing MCMC samples}
 }
 \value{
 posterior samples of P_star
 }
 \description{
-Title
+Extracts the posterior samples of P_star from the MCMC samples
 }

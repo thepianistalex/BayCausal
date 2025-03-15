@@ -2,13 +2,22 @@
 % Please edit documentation in R/set_null.R
 \name{set_chain}
 \alias{set_chain}
-\title{Title}
+\title{MCMC chain setup}
 \usage{
 set_chain(Nit, burn, thin, seed)
+}
+\arguments{
+\item{Nit}{number of iterations}
+
+\item{burn}{number of burn-in iterations}
+
+\item{thin}{thinning parameter}
+
+\item{seed}{random seed}
 }
 \value{
 a list containing chain setup
 }
 \description{
-Title
+MCMC chain setup
 }

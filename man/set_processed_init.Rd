@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_processed_init.R
 \name{set_processed_init}
 \alias{set_processed_init}
-\title{Title}
+\title{Set processed initial values for the chain}
 \usage{
 set_processed_init(
   data,
@@ -15,23 +15,23 @@ set_processed_init(
 )
 }
 \arguments{
-\item{data}{}
+\item{data}{The observed data}
 
-\item{mh_setup_lst}{}
+\item{mh_setup_lst}{A list containing the Metropolis-Hastings setups}
 
-\item{init_lst}{}
+\item{init_lst}{A list containing the initial values of the parameters}
 
-\item{prior_lst}{}
+\item{prior_lst}{A list containing the prior hyper parameters}
 
-\item{chain_setup_lst_1}{}
+\item{chain_setup_lst_1}{A list containing the chain setups for the first step}
 
-\item{chain_setup_lst_2}{}
+\item{chain_setup_lst_2}{A list containing the chain setups for the second step}
 
-\item{verbose}{}
+\item{verbose}{A boolean indicating whether to print the progress of the MCMC chain}
 }
 \value{
 processed initial values
 }
 \description{
-Title
+Obtain the processed initial values after two steps: Firstly, run the chain with algorithm glvcausal without UGLT constraints and RJMCMC. Secondly, run the chain only for L, C, E part with UGLT constraints and RJMCMC, the other parameters fixed to the mean of resulting samples from step 1.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/lingcausal_wo_x.R
 \name{lingcausal_wo_x}
 \alias{lingcausal_wo_x}
-\title{Title}
+\title{Implement the Bayesian causal discovery algorithm}
 \usage{
 lingcausal_wo_x(
   data,
@@ -14,21 +14,21 @@ lingcausal_wo_x(
 )
 }
 \arguments{
-\item{data}{}
+\item{data}{The observed data}
 
-\item{mh_setup_lst}{}
+\item{mh_setup_lst}{A list containing the Metropolis-Hastings setups}
 
-\item{init_lst}{}
+\item{init_lst}{A list containing the initial values of the parameters}
 
-\item{prior_lst}{}
+\item{prior_lst}{A list containing the prior hyper parameters}
 
-\item{chain_setup_lst}{}
+\item{chain_setup_lst}{A list containing the MCMC chain setups}
 
-\item{verbose}{}
+\item{verbose}{A boolean indicating whether to print the progress of the MCMC chain}
 }
 \value{
 a list containing mcmc samples
 }
 \description{
-Title
+Implement the Bayesian causal discovery algorithm in the presence of cycles when no covariates are included
 }

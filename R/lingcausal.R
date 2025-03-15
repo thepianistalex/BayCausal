@@ -1,11 +1,13 @@
-#' Title
+#' Implement the Bayesian causal discovery algorithm
+#' 
+#' Implement the Bayesian causal discovery algorithm in the presence of cycles
 #'
-#' @param data 
-#' @param mh_setup_lst 
-#' @param init_lst 
-#' @param prior_lst 
-#' @param chain_setup_lst 
-#' @param verbose 
+#' @param data The observed data
+#' @param mh_setup_lst A list containing the Metropolis-Hastings setups
+#' @param init_lst A list containing the initial values of the parameters
+#' @param prior_lst A list containing the prior hyper parameters
+#' @param chain_setup_lst A list containing the MCMC chain setups
+#' @param verbose A boolean indicating whether to print the progress of the MCMC chain
 #'
 #' @returns a list containing mcmc samples
 #' @export

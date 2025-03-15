@@ -2,18 +2,18 @@
 % Please edit documentation in R/result_analysis.R
 \name{extract_post_mean_all}
 \alias{extract_post_mean_all}
-\title{Title}
+\title{Extracts the posterior mean of a parameter from the MCMC samples}
 \usage{
 extract_post_mean_all(res, param)
 }
 \arguments{
-\item{res}{}
+\item{res}{A list containing MCMC samples}
 
-\item{param}{}
+\item{param}{The parameter to extract}
 }
 \value{
 posterior mean of the parameter
 }
 \description{
-Title
+Extracts the posterior mean of a parameter from all the MCMC samples
 }

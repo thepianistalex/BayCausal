@@ -2,7 +2,7 @@
 % Please edit documentation in R/result_analysis.R
 \name{post_process_L}
 \alias{post_process_L}
-\title{Title}
+\title{Post processes the MCMC samples of L}
 \usage{
 post_process_L(res, order_flag, pos_sign, cutoff = -Inf)
 }
@@ -19,5 +19,5 @@ post_process_L(res, order_flag, pos_sign, cutoff = -Inf)
 post processed samples
 }
 \description{
-Title
+Post processes the MCMC samples of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
 }

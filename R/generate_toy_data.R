@@ -1,10 +1,12 @@
-#' Title
+#' Generate toy data 
+#' 
+#' Generate toy data for testing and example usage
 #'
 #' @param include_B whether to include B in the toy data
 #' @param include_X whether to include X in the toy data
 #' @param include_C whether to include C in the toy data
 #'
-#' @returns toy data list
+#' @returns a list containing toy data ground truth
 #' @export
 generate_toy_data <- function(include_B = TRUE, include_X = TRUE, include_C = TRUE){
   

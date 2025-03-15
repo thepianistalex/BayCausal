@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_toy_data.R
 \name{generate_toy_data}
 \alias{generate_toy_data}
-\title{Title}
+\title{Generate toy data}
 \usage{
 generate_toy_data(include_B = TRUE, include_X = TRUE, include_C = TRUE)
 }
@@ -14,8 +14,8 @@ generate_toy_data(include_B = TRUE, include_X = TRUE, include_C = TRUE)
 \item{include_C}{whether to include C in the toy data}
 }
 \value{
-toy data list
+a list containing toy data ground truth
 }
 \description{
-Title
+Generate toy data for testing and example usage
 }

@@ -1,9 +1,11 @@
-#' Title
+#' Set default initial values for the chain
+#' 
+#' Other than the specified values, all the other values are generated randomly from their prior distributions. Tau is generated from full conditional distribution given all other quantities.
 #'
-#' @param seed random seed
+#' @param seed random seed used to initialize the chain
 #' @param P_star  number of latent factors
 #' @param data data list
-#' @param prior_lst a list containing prior hyperparameters
+#' @param prior_lst a list containing prior hyper parameters
 #'
 #' @returns a list containing initial values
 #' @export
@@ -95,7 +97,7 @@ set_init_default <- function(seed, P_star, data, prior_lst){
 
 
 
-#' Title
+#' Set default initial values for the chain without the covariate part
 #'
 #' @param seed random seed
 #' @param P_star  number of latent factors
@@ -175,9 +177,9 @@ set_init_default_wo_x <- function(seed, P_star, data, prior_lst){
 
 
 
-#' Title
+#' Set default chain setup
 #'
-#' @returns a list containing chain setup
+#' @returns a list containing default chain setup
 #' @export
 set_mh_default <- function(){
   
@@ -195,7 +197,7 @@ set_mh_default <- function(){
 }
 
 
-#' Title
+#' Set default prior hyper parameters
 #'
 #' @returns a list containing chain setup
 #' @export

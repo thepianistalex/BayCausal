@@ -51,7 +51,12 @@ set_mh_null <- function(){
 
 
 
-#' Title
+#' MCMC chain setup
+#' 
+#' @param Nit number of iterations
+#' @param burn number of burn-in iterations
+#' @param thin thinning parameter
+#' @param seed random seed
 #'
 #' @returns a list containing chain setup
 #' @export
