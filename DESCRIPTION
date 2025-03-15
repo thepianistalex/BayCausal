@@ -1,16 +1,17 @@
 Package: glvcausal
 Type: Package
-Title: What the Package Does (Short Line)
+Title: glvcausal: A Bayesian causal discovery algorithm in the presence of cycles and unobserved confounders
 Version: 1.0
 Date: 2025-02-06
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line).
-License: What license is it under?
+Author: xxxxxxxxxxxxxx
+Maintainer: Lang Lang <llang7@jh.edu>
+Description: glvcausal is an R package that implements a Bayesian causal discovery algorithm, as described in the paper "xxxxxxx". Grounded in the theoretical frameworks of noisy independent analysis and factor analysis, the algorithm is designed to accommodate potential cycles and unobserved confounders in the true underlying directed cyclic graph.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: 
     LaplacesDemon,
     Rcpp,
+    RcppArmadillo,
     stats
 LinkingTo: Rcpp, RcppArmadillo
 Suggests: 

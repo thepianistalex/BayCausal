@@ -1,25 +1,18 @@
 
-# glvcausal
+# glvcausal 
 
-<!-- badges: start -->
-<!-- badges: end -->
+glvcausal is an R package that implements a Bayesian causal
+discovery algorithm, as described in the paper "xxxxxxx". Grounded in the
+theoretical frameworks of noisy independent analysis and factor analysis, the
+algorithm is designed to accommodate potential cycles and unobserved confounders
+in the true underlying directed cyclic graph.
 
-The goal of glvcausal is to ...
+## Install the package
 
-## Installation
+install.packages("remotes")
+remotes::install_github("thepianistalex/glvcausal")
 
-You can install the development version of glvcausal like so:
+## Vignette
+Please knit the vignette under the vignette folder for an example use of the main functions in the package.
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
-```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(glvcausal)
-## basic example code
-```
-
+## Reference manual
