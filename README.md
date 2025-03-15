@@ -10,6 +10,7 @@ in the true underlying directed cyclic graph.
 ## Install the package
 
 install.packages("remotes")
+
 remotes::install_github("thepianistalex/glvcausal")
 
 ## Example use
