@@ -40,7 +40,7 @@ data <- generate_toy_data(include_C = FALSE, include_X = FALSE)
 # Set up prior, initial values, and chain 
 ```{r}
 mh_setup_lst <- set_mh_default()
-prior_lst <- set_prior_default(data)
+prior_lst <- set_prior_default(data,1)
 init_lst <- set_init_default_wo_x(seed, P_star, data, prior_lst)
 chain_setup_lst <- set_chain(Nit, burn, thin, seed)
 ```

@@ -199,6 +199,9 @@ set_mh_default <- function(){
 
 #' Set default prior hyper parameters
 #'
+#' @param data the data list
+#' @param Eq expected number of non-zero elements in the sparsity matrix for each row
+#'
 #' @returns a list containing chain setup
 #' @export
 set_prior_default <- function(data, Eq){

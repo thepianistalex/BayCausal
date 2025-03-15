@@ -6,6 +6,11 @@
 \usage{
 set_prior_default(data, Eq)
 }
+\arguments{
+\item{data}{the data list}
+
+\item{Eq}{expected number of non-zero elements in the sparsity matrix for each row}
+}
 \value{
 a list containing chain setup
 }
