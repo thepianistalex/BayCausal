@@ -1,17 +1,3 @@
-#' Set processed initial values for the chain
-#' 
-#' Obtain the processed initial values after two steps: Firstly, run the chain with algorithm glvcausal without UGLT constraints and RJMCMC. Secondly, run the chain only for L, C, E part with UGLT constraints and RJMCMC, the other parameters fixed to the mean of resulting samples from step 1.
-#'
-#' @param data The observed data
-#' @param mh_setup_lst A list containing the Metropolis-Hastings setups
-#' @param init_lst A list containing the initial values of the parameters
-#' @param prior_lst A list containing the prior hyper parameters
-#' @param chain_setup_lst_1 A list containing the chain setups for the first step
-#' @param chain_setup_lst_2 A list containing the chain setups for the second step
-#' @param verbose A boolean indicating whether to print the progress of the MCMC chain
-#'
-#' @returns processed initial values
-#' @export
 set_processed_init <- function(data, mh_setup_lst, init_lst, prior_lst, 
                                chain_setup_lst_1, chain_setup_lst_2, verbose){
   
@@ -26,18 +12,6 @@ set_processed_init <- function(data, mh_setup_lst, init_lst, prior_lst,
 
 
 
-#' Set processed initial values for the chain without the covariate part
-#'
-#' @param data The observed data
-#' @param mh_setup_lst A list containing the Metropolis-Hastings setups
-#' @param init_lst A list containing the initial values of the parameters
-#' @param prior_lst A list containing the prior hyper parameters
-#' @param chain_setup_lst_1 A list containing the chain setups for the first step
-#' @param chain_setup_lst_2 A list containing the chain setups for the second step
-#' @param verbose A boolean indicating whether to print the progress of the MCMC chain
-#'
-#' @returns processed initial values
-#' @export
 set_processed_init_wo_x <- function(data, mh_setup_lst, init_lst, prior_lst, 
                                chain_setup_lst_1, chain_setup_lst_2, verbose){
   
