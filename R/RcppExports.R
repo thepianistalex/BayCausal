@@ -2,54 +2,54 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 rinvgamma_rcpp <- function(a, b) {
-    .Call(`_glvcausal_rinvgamma_rcpp`, a, b)
+    .Call(`_BayCausal_rinvgamma_rcpp`, a, b)
 }
 
 rmvn_rcpp <- function(n, mean, sigma) {
-    .Call(`_glvcausal_rmvn_rcpp`, n, mean, sigma)
+    .Call(`_BayCausal_rmvn_rcpp`, n, mean, sigma)
 }
 
 rinvgaussian_rcpp <- function(mu, lambda) {
-    .Call(`_glvcausal_rinvgaussian_rcpp`, mu, lambda)
+    .Call(`_BayCausal_rinvgaussian_rcpp`, mu, lambda)
 }
 
 compute_Y_tilde_q <- function(q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC) {
-    .Call(`_glvcausal_compute_Y_tilde_q`, q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC)
+    .Call(`_BayCausal_compute_Y_tilde_q`, q, B, A, L, C, mu, Q, S, P, Y, X, minus_mu, minus_BY, minus_AX, minus_LC)
 }
 
 compute_loglik_B_rcpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
-    .Call(`_glvcausal_compute_loglik_B_rcpp`, q, B, A, L, C, mu, sigma2, Y, X)
+    .Call(`_BayCausal_compute_loglik_B_rcpp`, q, B, A, L, C, mu, sigma2, Y, X)
 }
 
 compute_marginal_loglik_rcpp <- function(sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma) {
-    .Call(`_glvcausal_compute_marginal_loglik_rcpp`, sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma)
+    .Call(`_BayCausal_compute_marginal_loglik_rcpp`, sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma)
 }
 
 compute_loglik_rjmcmc_cpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
-    .Call(`_glvcausal_compute_loglik_rjmcmc_cpp`, q, B, A, L, C, mu, sigma2, Y, X)
+    .Call(`_BayCausal_compute_loglik_rjmcmc_cpp`, q, B, A, L, C, mu, sigma2, Y, X)
 }
 
 update_mu_rcpp <- function(B, A, L, C, tau, sigma2, Y, X) {
-    .Call(`_glvcausal_update_mu_rcpp`, B, A, L, C, tau, sigma2, Y, X)
+    .Call(`_BayCausal_update_mu_rcpp`, B, A, L, C, tau, sigma2, Y, X)
 }
 
 update_A_rcpp <- function(gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X) {
-    .Call(`_glvcausal_update_A_rcpp`, gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X)
+    .Call(`_BayCausal_update_A_rcpp`, gamma_alpha, nu_alpha, B, L, C, mu, tau, sigma2, Y, X)
 }
 
 update_L_free_rcpp <- function(mu, A, B, C, tau, sigma2, Y, X) {
-    .Call(`_glvcausal_update_L_free_rcpp`, mu, A, B, C, tau, sigma2, Y, X)
+    .Call(`_BayCausal_update_L_free_rcpp`, mu, A, B, C, tau, sigma2, Y, X)
 }
 
 update_C_rcpp <- function(mu, A, B, L, tau, sigma2, Y, X) {
-    .Call(`_glvcausal_update_C_rcpp`, mu, A, B, L, tau, sigma2, Y, X)
+    .Call(`_BayCausal_update_C_rcpp`, mu, A, B, L, tau, sigma2, Y, X)
 }
 
 update_tau_rcpp <- function(B, A, L, C, mu, sigma2, Y, X) {
-    .Call(`_glvcausal_update_tau_rcpp`, B, A, L, C, mu, sigma2, Y, X)
+    .Call(`_BayCausal_update_tau_rcpp`, B, A, L, C, mu, sigma2, Y, X)
 }
 
 update_sigma2_rcpp <- function(B, A, L, C, mu, tau, Y, X, a_sigma, b_sigma) {
-    .Call(`_glvcausal_update_sigma2_rcpp`, B, A, L, C, mu, tau, Y, X, a_sigma, b_sigma)
+    .Call(`_BayCausal_update_sigma2_rcpp`, B, A, L, C, mu, tau, Y, X, a_sigma, b_sigma)
 }
 

@@ -4,7 +4,7 @@
 NULL
 
 ## usethis namespace: start
-#' @useDynLib glvcausal, .registration = TRUE
+#' @useDynLib BayCausal, .registration = TRUE
 ## usethis namespace: end
 NULL
 

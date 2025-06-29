@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // rinvgamma_rcpp
 double rinvgamma_rcpp(const double& a, const double& b);
-RcppExport SEXP _glvcausal_rinvgamma_rcpp(SEXP aSEXP, SEXP bSEXP) {
+RcppExport SEXP _BayCausal_rinvgamma_rcpp(SEXP aSEXP, SEXP bSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -25,7 +25,7 @@ END_RCPP
 }
 // rmvn_rcpp
 arma::mat rmvn_rcpp(const int& n, arma::vec& mean, arma::mat& sigma);
-RcppExport SEXP _glvcausal_rmvn_rcpp(SEXP nSEXP, SEXP meanSEXP, SEXP sigmaSEXP) {
+RcppExport SEXP _BayCausal_rmvn_rcpp(SEXP nSEXP, SEXP meanSEXP, SEXP sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -38,7 +38,7 @@ END_RCPP
 }
 // rinvgaussian_rcpp
 double rinvgaussian_rcpp(const double& mu, const double& lambda);
-RcppExport SEXP _glvcausal_rinvgaussian_rcpp(SEXP muSEXP, SEXP lambdaSEXP) {
+RcppExport SEXP _BayCausal_rinvgaussian_rcpp(SEXP muSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -50,7 +50,7 @@ END_RCPP
 }
 // compute_Y_tilde_q
 arma::vec compute_Y_tilde_q(const int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const int& Q, const int& S, const int& P, const arma::mat& Y, const arma::mat& X, const bool& minus_mu, const bool& minus_BY, const bool& minus_AX, const bool& minus_LC);
-RcppExport SEXP _glvcausal_compute_Y_tilde_q(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP QSEXP, SEXP SSEXP, SEXP PSEXP, SEXP YSEXP, SEXP XSEXP, SEXP minus_muSEXP, SEXP minus_BYSEXP, SEXP minus_AXSEXP, SEXP minus_LCSEXP) {
+RcppExport SEXP _BayCausal_compute_Y_tilde_q(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP QSEXP, SEXP SSEXP, SEXP PSEXP, SEXP YSEXP, SEXP XSEXP, SEXP minus_muSEXP, SEXP minus_BYSEXP, SEXP minus_AXSEXP, SEXP minus_LCSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -75,7 +75,7 @@ END_RCPP
 }
 // compute_loglik_B_rcpp
 double compute_loglik_B_rcpp(const int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_compute_loglik_B_rcpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_compute_loglik_B_rcpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -94,7 +94,7 @@ END_RCPP
 }
 // compute_marginal_loglik_rcpp
 double compute_marginal_loglik_rcpp(const arma::mat& sparsity_matrix, const int& q, const arma::mat& C, const arma::mat& tau, const arma::mat& L_0, const arma::mat& Y, const arma::mat& B, const arma::mat& X, const arma::mat& A, const arma::vec& mu, const double& a_sigma, const double& b_sigma);
-RcppExport SEXP _glvcausal_compute_marginal_loglik_rcpp(SEXP sparsity_matrixSEXP, SEXP qSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP L_0SEXP, SEXP YSEXP, SEXP BSEXP, SEXP XSEXP, SEXP ASEXP, SEXP muSEXP, SEXP a_sigmaSEXP, SEXP b_sigmaSEXP) {
+RcppExport SEXP _BayCausal_compute_marginal_loglik_rcpp(SEXP sparsity_matrixSEXP, SEXP qSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP L_0SEXP, SEXP YSEXP, SEXP BSEXP, SEXP XSEXP, SEXP ASEXP, SEXP muSEXP, SEXP a_sigmaSEXP, SEXP b_sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -116,7 +116,7 @@ END_RCPP
 }
 // compute_loglik_rjmcmc_cpp
 double compute_loglik_rjmcmc_cpp(int& q, const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_compute_loglik_rjmcmc_cpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_compute_loglik_rjmcmc_cpp(SEXP qSEXP, SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -135,7 +135,7 @@ END_RCPP
 }
 // update_mu_rcpp
 arma::mat update_mu_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_mu_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_update_mu_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -153,7 +153,7 @@ END_RCPP
 }
 // update_A_rcpp
 arma::mat update_A_rcpp(const arma::mat& gamma_alpha, const arma::mat& nu_alpha, const arma::mat& B, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_A_rcpp(SEXP gamma_alphaSEXP, SEXP nu_alphaSEXP, SEXP BSEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_update_A_rcpp(SEXP gamma_alphaSEXP, SEXP nu_alphaSEXP, SEXP BSEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -173,7 +173,7 @@ END_RCPP
 }
 // update_L_free_rcpp
 arma::mat update_L_free_rcpp(const arma::vec& mu, const arma::mat& A, const arma::mat& B, const arma::mat& C, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_L_free_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_update_L_free_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP CSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -191,7 +191,7 @@ END_RCPP
 }
 // update_C_rcpp
 arma::mat update_C_rcpp(const arma::vec& mu, const arma::mat& A, const arma::mat& B, const arma::mat& L, const arma::mat& tau, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_C_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP LSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_update_C_rcpp(SEXP muSEXP, SEXP ASEXP, SEXP BSEXP, SEXP LSEXP, SEXP tauSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -209,7 +209,7 @@ END_RCPP
 }
 // update_tau_rcpp
 arma::mat update_tau_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::vec& sigma2, const arma::mat& Y, const arma::mat& X);
-RcppExport SEXP _glvcausal_update_tau_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
+RcppExport SEXP _BayCausal_update_tau_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP sigma2SEXP, SEXP YSEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -227,7 +227,7 @@ END_RCPP
 }
 // update_sigma2_rcpp
 arma::vec update_sigma2_rcpp(const arma::mat& B, const arma::mat& A, const arma::mat& L, const arma::mat& C, const arma::vec& mu, const arma::mat& tau, const arma::mat& Y, const arma::mat& X, const double& a_sigma, const double& b_sigma);
-RcppExport SEXP _glvcausal_update_sigma2_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP tauSEXP, SEXP YSEXP, SEXP XSEXP, SEXP a_sigmaSEXP, SEXP b_sigmaSEXP) {
+RcppExport SEXP _BayCausal_update_sigma2_rcpp(SEXP BSEXP, SEXP ASEXP, SEXP LSEXP, SEXP CSEXP, SEXP muSEXP, SEXP tauSEXP, SEXP YSEXP, SEXP XSEXP, SEXP a_sigmaSEXP, SEXP b_sigmaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -247,23 +247,23 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_glvcausal_rinvgamma_rcpp", (DL_FUNC) &_glvcausal_rinvgamma_rcpp, 2},
-    {"_glvcausal_rmvn_rcpp", (DL_FUNC) &_glvcausal_rmvn_rcpp, 3},
-    {"_glvcausal_rinvgaussian_rcpp", (DL_FUNC) &_glvcausal_rinvgaussian_rcpp, 2},
-    {"_glvcausal_compute_Y_tilde_q", (DL_FUNC) &_glvcausal_compute_Y_tilde_q, 15},
-    {"_glvcausal_compute_loglik_B_rcpp", (DL_FUNC) &_glvcausal_compute_loglik_B_rcpp, 9},
-    {"_glvcausal_compute_marginal_loglik_rcpp", (DL_FUNC) &_glvcausal_compute_marginal_loglik_rcpp, 12},
-    {"_glvcausal_compute_loglik_rjmcmc_cpp", (DL_FUNC) &_glvcausal_compute_loglik_rjmcmc_cpp, 9},
-    {"_glvcausal_update_mu_rcpp", (DL_FUNC) &_glvcausal_update_mu_rcpp, 8},
-    {"_glvcausal_update_A_rcpp", (DL_FUNC) &_glvcausal_update_A_rcpp, 10},
-    {"_glvcausal_update_L_free_rcpp", (DL_FUNC) &_glvcausal_update_L_free_rcpp, 8},
-    {"_glvcausal_update_C_rcpp", (DL_FUNC) &_glvcausal_update_C_rcpp, 8},
-    {"_glvcausal_update_tau_rcpp", (DL_FUNC) &_glvcausal_update_tau_rcpp, 8},
-    {"_glvcausal_update_sigma2_rcpp", (DL_FUNC) &_glvcausal_update_sigma2_rcpp, 10},
+    {"_BayCausal_rinvgamma_rcpp", (DL_FUNC) &_BayCausal_rinvgamma_rcpp, 2},
+    {"_BayCausal_rmvn_rcpp", (DL_FUNC) &_BayCausal_rmvn_rcpp, 3},
+    {"_BayCausal_rinvgaussian_rcpp", (DL_FUNC) &_BayCausal_rinvgaussian_rcpp, 2},
+    {"_BayCausal_compute_Y_tilde_q", (DL_FUNC) &_BayCausal_compute_Y_tilde_q, 15},
+    {"_BayCausal_compute_loglik_B_rcpp", (DL_FUNC) &_BayCausal_compute_loglik_B_rcpp, 9},
+    {"_BayCausal_compute_marginal_loglik_rcpp", (DL_FUNC) &_BayCausal_compute_marginal_loglik_rcpp, 12},
+    {"_BayCausal_compute_loglik_rjmcmc_cpp", (DL_FUNC) &_BayCausal_compute_loglik_rjmcmc_cpp, 9},
+    {"_BayCausal_update_mu_rcpp", (DL_FUNC) &_BayCausal_update_mu_rcpp, 8},
+    {"_BayCausal_update_A_rcpp", (DL_FUNC) &_BayCausal_update_A_rcpp, 10},
+    {"_BayCausal_update_L_free_rcpp", (DL_FUNC) &_BayCausal_update_L_free_rcpp, 8},
+    {"_BayCausal_update_C_rcpp", (DL_FUNC) &_BayCausal_update_C_rcpp, 8},
+    {"_BayCausal_update_tau_rcpp", (DL_FUNC) &_BayCausal_update_tau_rcpp, 8},
+    {"_BayCausal_update_sigma2_rcpp", (DL_FUNC) &_BayCausal_update_sigma2_rcpp, 10},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_glvcausal(DllInfo *dll) {
+RcppExport void R_init_BayCausal(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(glvcausal)
+library(BayCausal)
 
-test_check("glvcausal")
+test_check("BayCausal")

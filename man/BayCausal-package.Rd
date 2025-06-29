@@ -1,30 +1,30 @@
-\name{glvcausal-package}
-\alias{glvcausal-package}
-\alias{glvcausal}
+\name{BayCausal-package}
+\alias{BayCausal-package}
+\alias{BayCausal}
 \docType{package}
 \title{
-\packageTitle{glvcausal}
+\packageTitle{BayCausal}
 }
 \description{
-\packageDescription{glvcausal}
+\packageDescription{BayCausal}
 }
 \details{
 %%  ~~ An overview of how to use the package, ~~
 %%  ~~ including the most important functions ~~
 }
 \author{
-\packageAuthor{glvcausal}
+\packageAuthor{BayCausal}
 
-Maintainer: \packageMaintainer{glvcausal}
+Maintainer: \packageMaintainer{BayCausal}
 }
 \references{
 %%  ~~ Literature or other references for background information ~~
 }
 \keyword{package}
 
-%% Uncomment below to imitate parts of library(help = glvcausal)
-%\section{The \file{DESCRIPTION} File}{\packageDESCRIPTION{glvcausal}}
-%\section{Documentation Index}{\packageIndices{glvcausal}}
+%% Uncomment below to imitate parts of library(help = BayCausal)
+%\section{The \file{DESCRIPTION} File}{\packageDESCRIPTION{BayCausal}}
+%\section{Documentation Index}{\packageIndices{BayCausal}}
 
 \seealso{
 %%  ~~ Optional links to other man pages, e.g. ~~
