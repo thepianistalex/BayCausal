@@ -204,7 +204,7 @@ set_mh_default <- function(){
 #'
 #' @returns a list containing chain setup
 #' @export
-set_prior_default <- function(data, Eq){
+set_prior_default <- function(data, Eq = 1){
   
   prior_lst <- list()
   

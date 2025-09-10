@@ -4,7 +4,7 @@
 \alias{set_prior_default}
 \title{Set default prior hyper parameters}
 \usage{
-set_prior_default(data, Eq)
+set_prior_default(data, Eq = 1)
 }
 \arguments{
 \item{data}{the data list}
