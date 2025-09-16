@@ -323,6 +323,47 @@ arma::mat update_L_free_rcpp(const arma::vec &mu, const arma::mat &A, const arma
 
 
 // [[Rcpp::export]]
+arma::mat update_L_uni_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B,
+                            const arma::mat &C, const arma::mat &tau, const arma::vec &sigma2,
+                            const arma::mat &Y, const arma::mat &X) {
+  // Same interface as update_L_free_rcpp, but constrain L to be diagonal:
+  // only L(q,q) is updated (when that column exists); all off-diagonals are zero.
+  int Q = mu.n_elem;
+  int P_star = C.n_cols;
+  int S = X.n_cols;
+  int diag_len = std::min(Q, P_star);
+  arma::mat L_update(Q, P_star, arma::fill::zeros);
+
+  // prior precision for each diagonal element (matching free-L prior scale 0.001 I)
+  const double prior_prec = 0.0000001;
+
+  for (int q = 0; q < diag_len; ++q) {
+    // Build Y_tilde without the LC term (so L contribution is excluded)
+    arma::mat L_placeholder; // unused in compute_Y_tilde_q
+    arma::vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L_placeholder, C, mu, Q, S, P_star, Y, X,
+                                            true,  // minus_mu
+                                            true,  // minus_BY
+                                            true,  // minus_AX
+                                            false  // minus_LC (exclude)
+                                            );
+
+    arma::vec weight = tau.col(q) / sigma2(q);
+    arma::vec C_q = C.col(q);
+
+    // Scalar Normal posterior for L(q,q)
+    double V_n_inv = prior_prec + arma::dot(C_q, C_q % weight);
+    double V_n = 1.0 / V_n_inv;
+    double mu_n = V_n * arma::dot(C_q, Y_tilde_q % weight);
+
+    // Draw from N(mu_n, V_n)
+    double sample = R::rnorm(mu_n, std::sqrt(V_n));
+    L_update(q, q) = sample;
+  }
+
+  return L_update;
+}
+
+// [[Rcpp::export]]
 arma::mat update_C_rcpp(const arma::vec &mu, const arma::mat &A, const arma::mat &B, 
                         const arma::mat &L, const arma::mat &tau, 
                         const arma::vec &sigma2,

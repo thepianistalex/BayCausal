@@ -61,16 +61,17 @@ extract_P_star <- function(res) {
 
 #' Post processes the MCMC samples of L
 #' 
-#' Post processes the MCMC samples of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
+#' Post processes the MCMC samples of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero. Optionally, it can also remove columns that have only one non-zero entry after thresholding.
 #'
 #' @param res A list containing MCMC samples
 #' @param order_flag A logical indicating whether to order the columns of L
 #' @param pos_sign A logical indicating whether to enforce positive sign on the first non-zero element of each column of L
 #' @param cutoff A numeric value indicating the threshold below which the elements of L are set to zero
+#' @param remove_singleton A logical indicating whether to remove columns with only one non-zero entry (default: FALSE)
 #'
 #' @returns post processed samples
 #' @export
-post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf) {
+post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf, remove_singleton = FALSE) {
   
   processed_res <- lapply(res, function(sample) {
     
@@ -82,11 +83,24 @@ post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf) {
         if (length(nz) == 0) NA_integer_ else nz[1]
       })
       nonzero_cols <- !is.na(sample$pivot)
-      sample$P_star <- sum(nonzero_cols)
       sample$L <- sample$L[, nonzero_cols, drop = FALSE]
       sample$pivot <- sample$pivot[nonzero_cols]
       sample$sparsity_matrix <- sample$sparsity_matrix[, nonzero_cols, drop = FALSE]
     }
+
+    # Optionally remove columns that have only one non-zero entry
+    if (ncol(sample$L) > 0 && isTRUE(remove_singleton)) {
+      nnz_per_col <- colSums(sample$L != 0)
+      keep_cols <- nnz_per_col > 1
+      if (any(!keep_cols)) {
+        sample$L <- sample$L[, keep_cols, drop = FALSE]
+        sample$sparsity_matrix <- sample$sparsity_matrix[, keep_cols, drop = FALSE]
+        sample$pivot <- sample$pivot[keep_cols]
+      }
+    }
+
+    # Update P_star after any filtering
+    sample$P_star <- if (ncol(sample$L) > 0) ncol(sample$L) else 0
     
     if (pos_sign) {
       for (j in 1:ncol(sample$L)) {
@@ -113,16 +127,17 @@ post_process_L <- function(res, order_flag, pos_sign, cutoff = -Inf) {
 
 #' Post processes the posterior mean of L
 #' 
-#' Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
+#' Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero. Optionally, it can also remove columns that have only one non-zero entry after thresholding.
 #'
 #' @param L_mean The posterior mean of L
 #' @param order_flag A logical indicating whether to order the columns of L
 #' @param pos_sign A logical indicating whether to enforce positive sign on the first non-zero element of each column of L
 #' @param cutoff A numeric value indicating the threshold below which the elements of L are set to zero
+#' @param remove_singleton A logical indicating whether to remove columns with only one non-zero entry (default: FALSE)
 #'
 #' @returns post processed L posterior mean
 #' @export
-post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = -Inf) {
+post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = -Inf, remove_singleton = FALSE) {
   
   processed_L_mean <- L_mean
   
@@ -141,6 +156,14 @@ post_process_L_mean <- function(L_mean, order_flag, pos_sign, cutoff = -Inf) {
   nonzero_cols <- !is.na(pivot)
   processed_L_mean <- processed_L_mean[, nonzero_cols, drop = FALSE]
   pivot <- pivot[nonzero_cols]
+
+  # Optionally remove columns that have only one non-zero entry
+  if (ncol(processed_L_mean) > 0 && isTRUE(remove_singleton)) {
+    nnz_per_col <- colSums(processed_L_mean != 0)
+    keep_cols <- nnz_per_col > 1
+    processed_L_mean <- processed_L_mean[, keep_cols, drop = FALSE]
+    pivot <- pivot[keep_cols]
+  }
   
   if (pos_sign) {
     for (j in 1:ncol(processed_L_mean)) {

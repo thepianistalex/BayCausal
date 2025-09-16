@@ -87,6 +87,54 @@ glvcausal_check_mu <- function(data, mh_setup_lst, init_lst, prior_lst, chain_se
 }
 
 
+# Generate simulated data where L is diagonal-compatible (only L[q,q] can be non-zero)
+generate_sim_data_uni <- function(seed, n){
+  
+  # Fixed structure
+  set.seed(0)
+  Q <- 5
+  S <- 2
+  P <- 2
+  
+  mu <- runif(Q, -1, 1)
+  
+  B <- matrix(c(
+    0, 0.5, 0, 0, 0,
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0.4, -0.7,
+    0.3, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
+  ), nrow = Q, byrow = TRUE)
+  
+  A <- matrix(c(runif(Q*S, -1, 1)), Q, S)
+  
+  # L is Q x P, only diagonal positions (q,q) allowed to be non-zero
+  L <- matrix(0, nrow = Q, ncol = P)
+  L[1,1] <- 0.6
+  L[2,2] <- -0.5
+  
+  # Random part
+  set.seed(seed)
+  X <- matrix(rnorm(n*S), n, S)
+  C <- matrix(rnorm(n*P), n, P)
+  
+  sigma_e <- rep(sqrt(1/8), Q)
+  E <- matrix(NA, n, Q)
+  for(q in 1:Q){
+    E[,q] <- LaplacesDemon::rlaplace(n, 0, 2*sigma_e[q])
+  }
+  
+  Y <- matrix(NA, n, Q)
+  mix_mat <- solve(diag(Q)-B)
+  for(i in 1:n){
+    Y[i,] <- mix_mat %*% (mu + A%*%X[i,] + L%*%C[i,] + E[i,])
+  }
+  
+  data <- list(Y = Y, X = X, mu = mu, B = B, A = A, L = L, C = C, sigma_e = sigma_e, Q = Q, S = S, P = P, n = n)
+  return(data)
+}
+
+
 
 glvcausal_check_A <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
   
@@ -194,3 +242,29 @@ glvcausal_check_L_free <- function(data, mh_setup_lst, init_lst, prior_lst, chai
   return(mcmc_lst)
   
 }
+
+
+
+glvcausal_check_L_uni <- function(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, verbose){
+
+    set.seed(chain_setup_lst$seed)
+
+    param_all_lst <- init_lst
+    mcmc_lst <- list()
+    mcmc_lst_count <- 0
+
+    for(it in 2:chain_setup_lst$Nit){
+  
+      param_all_lst$L_free <- update_L_uni_rcpp(param_all_lst$mu, param_all_lst$A, param_all_lst$B, param_all_lst$C, param_all_lst$tau, param_all_lst$sigma2, data$Y, data$X)
+      param_all_lst$tau <- update_tau_rcpp(param_all_lst$B, param_all_lst$A, param_all_lst$L_free, param_all_lst$C, param_all_lst$mu, param_all_lst$sigma2, data$Y, data$X)
+  
+      if(save_check(it, chain_setup_lst$burn, chain_setup_lst$thin)){
+        mcmc_lst_count <- mcmc_lst_count + 1
+        mcmc_lst[[mcmc_lst_count]] <- param_all_lst
+      }
+  
+    }
+
+    return(mcmc_lst)
+
+  }

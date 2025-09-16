@@ -21,11 +21,7 @@ test_that("check sigma2 tau", {
   init_lst$C <- data$C
   # init_lst$sigma2 <- data$sigma_e^2
   
-  chain_setup_lst <- set_chain_null()
-  chain_setup_lst$Nit <- Nit
-  chain_setup_lst$burn <- burn
-  chain_setup_lst$thin <- thin
-  chain_setup_lst$seed <- seed
+  chain_setup_lst <- set_chain(Nit, burn, thin, seed)
   
   
   res <- glvcausal_check_sigma2_tau(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)

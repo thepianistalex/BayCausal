@@ -21,12 +21,7 @@ test_that("check mu", {
   init_lst$C <- data$C
   init_lst$sigma2 <- data$sigma_e^2
   
-  chain_setup_lst <- set_chain_null()
-  chain_setup_lst$Nit <- Nit
-  chain_setup_lst$burn <- burn
-  chain_setup_lst$thin <- thin
-  chain_setup_lst$seed <- seed
-  
+  chain_setup_lst <- set_chain(Nit, burn, thin, seed)
   
   res <- glvcausal_check_mu(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
   post_mean <- extract_post_mean(res, "mu", data$P)

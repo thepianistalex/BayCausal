@@ -38,6 +38,9 @@ set_init_default <- function(seed, P_star, data, prior_lst){
   C_init <- matrix(rnorm(n*P_star,0,1), n, P_star)
   L_free_init <- matrix(rnorm(Q*(Q-1)), Q, Q-1)
   C_free_init <- matrix(rnorm(n*(Q-1),0,1), n, Q-1)
+  L_uni_init <- matrix(0, Q, Q)
+  diag(L_uni_init) <- rnorm(Q,0,1)
+  C_uni_init <- matrix(rnorm(n*Q,0,1), n, Q)
   sparsity_matrix_init <- matrix(1, Q, P_star)
   pivot_init <- 1:P_star
   
@@ -88,7 +91,7 @@ set_init_default <- function(seed, P_star, data, prior_lst){
   
   init_list <- list(A=A_init, gamma_alpha=gamma_alpha_init, nu_alpha=nu_alpha_init, rho_alpha=rho_alpha_init,
                     B=B_init, gamma_beta=gamma_beta_init, nu_beta=nu_beta_init, rho_beta=rho_beta_init,
-                    C=C_init, L=L_init, C_free=C_free_init, L_free=L_free_init, a=a_init, tau=tau_init, 
+                    C=C_init, L=L_init, C_free=C_free_init, L_free=L_free_init, C_uni = C_uni_init, L_uni = L_uni_init, a=a_init, tau=tau_init, 
                     mu=mu_init, sigma2=sigma2_init, P_star=P_star, sparsity_matrix=sparsity_matrix_init, 
                     pivot=pivot_init, zeta=zeta_init, kappa=kappa_init)
   

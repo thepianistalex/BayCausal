@@ -41,6 +41,10 @@ update_L_free_rcpp <- function(mu, A, B, C, tau, sigma2, Y, X) {
     .Call(`_BayCausal_update_L_free_rcpp`, mu, A, B, C, tau, sigma2, Y, X)
 }
 
+update_L_uni_rcpp <- function(mu, A, B, C, tau, sigma2, Y, X) {
+    .Call(`_BayCausal_update_L_uni_rcpp`, mu, A, B, C, tau, sigma2, Y, X)
+}
+
 update_C_rcpp <- function(mu, A, B, L, tau, sigma2, Y, X) {
     .Call(`_BayCausal_update_C_rcpp`, mu, A, B, L, tau, sigma2, Y, X)
 }
