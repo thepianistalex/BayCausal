@@ -40,14 +40,14 @@ data <- generate_toy_data_t()
 # Set up prior, initial values, and chain 
 ```{r}
 mh_setup_lst <- set_mh_default()
-prior_lst <- set_prior_default(data,1)
+prior_lst <- set_prior_default_t(data,1)
 init_lst <- set_init_default(seed, P_star, data, prior_lst)
 chain_setup_lst <- set_chain(Nit, burn, thin, seed)
 ```
 
 # Run the algorithm
 ```{r}
-res <- glvcausal(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
+res <- glvcausal_t(data, mh_setup_lst, init_lst, prior_lst, chain_setup_lst, FALSE)
 ```
 
 # Result

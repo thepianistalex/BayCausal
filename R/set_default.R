@@ -228,3 +228,35 @@ set_prior_default <- function(data, Eq = 1, nu_0 = 2.5e-4){
   
   return(prior_lst)
 }
+
+
+
+#' Set default prior hyper parameters for t-distribution model
+#'
+#' @param data the data list
+#' @param Eq expected number of non-zero elements in the sparsity matrix for each row
+#'
+#' @returns a list containing chain setup
+#' @export
+set_prior_default_t <- function(data, Eq = 1, nu_0 = 2.5e-4){
+  
+  prior_lst <- list()
+  
+  prior_lst$a_nu <- 1
+  prior_lst$b_nu <- 1
+  prior_lst$a_rho <- 1
+  prior_lst$b_rho <- 1
+  prior_lst$a_sigma <- 1
+  prior_lst$b_sigma <- 1
+  prior_lst$nu_0 <- nu_0
+  prior_lst$a_a1 <- 6
+  prior_lst$H <- ncol(data$Y) - 1
+  prior_lst$b_a1 <- prior_lst$a_a1*(prior_lst$H-Eq)/(prior_lst$H*Eq)
+  prior_lst$a_a2 <- prior_lst$a_a1
+  prior_lst$b_a2 <- prior_lst$a_a1
+  prior_lst$a_kappa <- 1
+  prior_lst$b_kappa <- 1
+  prior_lst$nu_t <- 4
+  
+  return(prior_lst)
+}
