@@ -5,16 +5,17 @@
 #' @param include_B whether to include B in the toy data
 #' @param include_X whether to include X in the toy data
 #' @param include_C whether to include C in the toy data
+#' @param nu_t degrees of freedom for the t-distribution
 #'
 #' @returns a list containing toy data ground truth
 #' @export
-generate_toy_data_t <- function(include_B = TRUE, include_X = TRUE, include_C = TRUE){
+generate_toy_data_t <- function(include_B = TRUE, include_X = TRUE, include_C = TRUE, nu_t){
   
   set.seed(0)
   Q <- 3
   S <- 2
   P <- 1
-  n <- 3000
+  n <- 5000
   
   mu <- runif(Q, -1, 1)
   
@@ -39,8 +40,8 @@ generate_toy_data_t <- function(include_B = TRUE, include_X = TRUE, include_C = 
   X <- matrix(rnorm(n*S), n, S)
   C <- matrix(rnorm(n*P), n, P)
   
-  sigma_e <- sqrt(1/2) 
-  E <- matrix(rt(n * Q, df = 4) * sigma_e, nrow = n, ncol = Q)
+  sigma_e <- sqrt((nu_t - 2)/nu_t) 
+  E <- matrix(rt(n * Q, df = nu_t) * sigma_e, nrow = n, ncol = Q)
   
   Y <- matrix(NA, n, Q)
   

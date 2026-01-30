@@ -235,10 +235,11 @@ set_prior_default <- function(data, Eq = 1, nu_0 = 2.5e-4){
 #'
 #' @param data the data list
 #' @param Eq expected number of non-zero elements in the sparsity matrix for each row
+#' @param nu_t degrees of freedom for the t-distribution
 #'
 #' @returns a list containing chain setup
 #' @export
-set_prior_default_t <- function(data, Eq = 1, nu_0 = 2.5e-4){
+set_prior_default_t <- function(data, Eq = 1, nu_0 = 2.5e-4, nu_t){
   
   prior_lst <- list()
   
@@ -256,7 +257,7 @@ set_prior_default_t <- function(data, Eq = 1, nu_0 = 2.5e-4){
   prior_lst$b_a2 <- prior_lst$a_a1
   prior_lst$a_kappa <- 1
   prior_lst$b_kappa <- 1
-  prior_lst$nu_t <- 4
+  prior_lst$nu_t <- nu_t
   
   return(prior_lst)
 }
