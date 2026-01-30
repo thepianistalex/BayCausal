@@ -4,7 +4,13 @@
 \alias{post_process_L_mean}
 \title{Post processes the posterior mean of L}
 \usage{
-post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = -Inf)
+post_process_L_mean(
+  L_mean,
+  order_flag,
+  pos_sign,
+  cutoff = -Inf,
+  remove_singleton = FALSE
+)
 }
 \arguments{
 \item{L_mean}{The posterior mean of L}
@@ -14,10 +20,12 @@ post_process_L_mean(L_mean, order_flag, pos_sign, cutoff = -Inf)
 \item{pos_sign}{A logical indicating whether to enforce positive sign on the first non-zero element of each column of L}
 
 \item{cutoff}{A numeric value indicating the threshold below which the elements of L are set to zero}
+
+\item{remove_singleton}{A logical indicating whether to remove columns with only one non-zero entry (default: FALSE)}
 }
 \value{
 post processed L posterior mean
 }
 \description{
-Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero
+Post processes the posterior mean of L by ordering the columns, enforcing positive sign on the first non-zero element of each column, and setting elements below a threshold to zero. Optionally, it can also remove columns that have only one non-zero entry after thresholding.
 }

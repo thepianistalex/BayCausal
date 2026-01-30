@@ -21,12 +21,20 @@ compute_loglik_B_rcpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
     .Call(`_BayCausal_compute_loglik_B_rcpp`, q, B, A, L, C, mu, sigma2, Y, X)
 }
 
+compute_loglik_B_t_rcpp <- function(q, B, A, L, C, mu, sigma2, Y, X, nu_t) {
+    .Call(`_BayCausal_compute_loglik_B_t_rcpp`, q, B, A, L, C, mu, sigma2, Y, X, nu_t)
+}
+
 compute_marginal_loglik_rcpp <- function(sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma) {
     .Call(`_BayCausal_compute_marginal_loglik_rcpp`, sparsity_matrix, q, C, tau, L_0, Y, B, X, A, mu, a_sigma, b_sigma)
 }
 
 compute_loglik_rjmcmc_cpp <- function(q, B, A, L, C, mu, sigma2, Y, X) {
     .Call(`_BayCausal_compute_loglik_rjmcmc_cpp`, q, B, A, L, C, mu, sigma2, Y, X)
+}
+
+compute_loglik_rjmcmc_t_rcpp <- function(q, B, A, L, C, mu, sigma2, Y, X, nu_t) {
+    .Call(`_BayCausal_compute_loglik_rjmcmc_t_rcpp`, q, B, A, L, C, mu, sigma2, Y, X, nu_t)
 }
 
 update_mu_rcpp <- function(B, A, L, C, tau, sigma2, Y, X) {
@@ -55,5 +63,9 @@ update_tau_rcpp <- function(B, A, L, C, mu, sigma2, Y, X) {
 
 update_sigma2_rcpp <- function(B, A, L, C, mu, tau, Y, X, a_sigma, b_sigma) {
     .Call(`_BayCausal_update_sigma2_rcpp`, B, A, L, C, mu, tau, Y, X, a_sigma, b_sigma)
+}
+
+update_tau_t_rcpp <- function(B, A, L, C, mu, sigma2, Y, X, nu_t) {
+    .Call(`_BayCausal_update_tau_t_rcpp`, B, A, L, C, mu, sigma2, Y, X, nu_t)
 }
 

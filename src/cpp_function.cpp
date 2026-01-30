@@ -122,6 +122,41 @@ double compute_loglik_B_rcpp(const int &q, const arma::mat &B, const arma::mat &
 
 
 // [[Rcpp::export]]
+double compute_loglik_B_t_rcpp(const int &q, const arma::mat &B, const arma::mat &A, 
+                             const arma::mat &L, const arma::mat &C, const arma::vec &mu, 
+                             const arma::vec &sigma2, const arma::mat &Y, const arma::mat &X,
+                             const double &nu_t){
+  
+  double loglik = 0;
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+  double jacob_factor;
+  int q_cpp = q - 1;
+  
+  // calculate the jacobian matrix 
+  mat jacob; jacob.eye(Q,Q); jacob -= B;
+  jacob_factor = abs(det(jacob));
+  loglik += n*log(jacob_factor);
+  vec Y_tilde_q = compute_Y_tilde_q(q_cpp, B, A, L, C, mu, Q, S, P, Y, X, true, true, true, true);
+  
+  double sigma = sqrt(sigma2(q_cpp));
+  double const_term = R::lgammafn((nu_t + 1.0) / 2.0) - R::lgammafn(nu_t / 2.0) - 0.5 * log(nu_t * M_PI) - log(sigma);
+
+  for (int i=0; i<n; i++){
+    double resid = Y_tilde_q(i);
+    double z = resid / sigma;
+    double log_density = const_term - ((nu_t + 1.0) / 2.0) * log(1.0 + (z * z) / nu_t);
+    loglik += log_density;
+  }
+  
+  return(loglik);
+}
+
+
+
+// [[Rcpp::export]]
 double compute_marginal_loglik_rcpp(const arma::mat &sparsity_matrix, const int &q, const arma::mat &C, const arma::mat &tau,
                                     const arma::mat &L_0, const arma::mat &Y, const arma::mat &B, const arma::mat &X, const arma::mat &A, const arma::vec &mu,
                                     const double &a_sigma, const double &b_sigma) {
@@ -192,6 +227,35 @@ double compute_loglik_rjmcmc_cpp(int &q, const arma::mat &B, const arma::mat &A,
       - arma::sum(arma::abs(Y_tilde_q)) / scale;
     
     return loglik;
+}
+
+// [[Rcpp::export]]
+double compute_loglik_rjmcmc_t_rcpp(int &q, const arma::mat &B, const arma::mat &A, 
+                                 const arma::mat &L, const arma::mat &C, 
+                                 const arma::vec &mu, const arma::vec &sigma2, 
+                                 const arma::mat &Y, const arma::mat &X,
+                                 const double &nu_t
+) {
+  // make the index 0-based
+  int q_cpp = q - 1;
+  int n = Y.n_rows;
+  arma::vec Y_tilde_q = Y.col(q_cpp) 
+    - mu(q_cpp)
+    - Y * B.row(q_cpp).t() 
+    - X * A.row(q_cpp).t() 
+    - C * L.row(q_cpp).t();
+    
+  double sigma = sqrt(sigma2(q_cpp));
+  double const_term = R::lgammafn((nu_t + 1.0) / 2.0) - R::lgammafn(nu_t / 2.0) - 0.5 * log(nu_t * M_PI) - log(sigma);
+  
+  double loglik = 0;
+  for (int i=0; i<n; i++){
+    double resid = Y_tilde_q(i);
+    double z = resid / sigma;
+    loglik += const_term - ((nu_t + 1.0) / 2.0) * log(1.0 + (z * z) / nu_t);
+  }
+    
+  return loglik;
 }
 
 
@@ -452,4 +516,37 @@ arma::vec update_sigma2_rcpp(const arma::mat &B, const arma::mat &A, const arma:
   }
   
   return(sigma2_update);
+}
+
+
+
+// [[Rcpp::export]]
+arma::mat update_tau_t_rcpp(const arma::mat &B, const arma::mat &A, const arma::mat &L, 
+                                const arma::mat &C, const arma::vec &mu, const arma::vec &sigma2,
+                                const arma::mat &Y, const arma::mat &X, const double &nu_t){
+
+  double n = Y.n_rows;
+  double Q = Y.n_cols;
+  double S = X.n_cols;
+  double P = L.n_cols;
+
+  mat tau_update(n, Q, fill::none);
+
+  for (int q=0; q<Q; q++){
+    // For tau update we need residuals. All terms included.
+    vec Y_tilde_q = compute_Y_tilde_q(q, B, A, L, C, mu, Q, S, P, Y, X, true, true, true, true);
+    
+    // lambda_iq ~ Gamma((nu+1)/2, rate = (y-mu)^2/(2*sigma2) + nu/2)
+    // R::rgamma uses scale = 1/rate
+    double shape = (nu_t + 1.0) / 2.0;
+    
+    for (int i=0; i<n; i++){
+       double resid_sq = pow(Y_tilde_q(i), 2);
+       double rate = resid_sq / (2.0 * sigma2(q)) + nu_t / 2.0;
+       double scale = 1.0 / rate;
+       tau_update(i,q) = R::rgamma(shape, scale); 
+    }
+  }
+
+  return(tau_update);
 }
