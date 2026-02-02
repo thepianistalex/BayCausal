@@ -105,7 +105,7 @@ update_init_wo_UGLT_new <- function(init_lst, res, prior_lst){
   init_lst$nu_alpha <- extract_post_mean(res, "nu_alpha", init_lst$P_star)
   init_lst$rho_alpha <- extract_post_mean(res, "rho_alpha", init_lst$P_star)
   A_tmp <- extract_post_mean(res, "A", init_lst$P_star) * init_lst$gamma_alpha
-  init_lst$A <- A_tmp
+  init_lst$A <- A_tmp * gamma_alpha_tmp
   
   gamma_beta_tmp <- extract_post_mean(res, "gamma_beta", init_lst$P_star)
   gamma_beta_tmp <- ifelse(gamma_beta_tmp > 0.5, 1, prior_lst$nu_0)
