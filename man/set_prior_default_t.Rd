@@ -4,12 +4,14 @@
 \alias{set_prior_default_t}
 \title{Set default prior hyper parameters for t-distribution model}
 \usage{
-set_prior_default_t(data, Eq = 1, nu_0 = 0.00025)
+set_prior_default_t(data, Eq = 1, nu_0 = 0.00025, nu_t)
 }
 \arguments{
 \item{data}{the data list}
 
 \item{Eq}{expected number of non-zero elements in the sparsity matrix for each row}
+
+\item{nu_t}{degrees of freedom for the t-distribution}
 }
 \value{
 a list containing chain setup

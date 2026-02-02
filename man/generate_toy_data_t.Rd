@@ -4,7 +4,7 @@
 \alias{generate_toy_data_t}
 \title{Generate t toy data}
 \usage{
-generate_toy_data_t(include_B = TRUE, include_X = TRUE, include_C = TRUE)
+generate_toy_data_t(include_B = TRUE, include_X = TRUE, include_C = TRUE, nu_t)
 }
 \arguments{
 \item{include_B}{whether to include B in the toy data}
@@ -12,6 +12,8 @@ generate_toy_data_t(include_B = TRUE, include_X = TRUE, include_C = TRUE)
 \item{include_X}{whether to include X in the toy data}
 
 \item{include_C}{whether to include C in the toy data}
+
+\item{nu_t}{degrees of freedom for the t-distribution}
 }
 \value{
 a list containing toy data ground truth
